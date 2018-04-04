@@ -1,0 +1,49 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.App-header {
+  background-color: #222;
+  margin-top: 150px;
+  padding-top: 200px;
+  color: white;
+}
+
+.App-title {
+  font-size: 1.5em;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+.nav-bar-div {
+    height: 100%;
+    width: 5%;
+    position: absolute;
+}
+
+.menu-bar-details {
+    min-height: 7vh;
+    background-color: #222222;
+}
+
+.addlog-main-div {
+    padding: 12px;
+}
+
+.addlog-text-area {
+    width: 30%;
+    position: relative;
+    left: 35%;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
