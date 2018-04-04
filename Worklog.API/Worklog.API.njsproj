@@ -3,17 +3,16 @@
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">14.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
-    <Name>Worklog.Webclient</Name>
-    <RootNamespace>Worklog.Webclient</RootNamespace>
+    <Name>Worklog.API</Name>
+    <RootNamespace>Worklog.API</RootNamespace>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>e20c736f-f1ed-4d8b-9842-f2d7fac92fdd</ProjectGuid>
+    <ProjectGuid>b06edb2b-0478-4ae9-88b0-548d257de3cf</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>
-    </StartupFile>
+    <StartupFile>src\app.ts</StartupFile>
     <StartWebBrowser>True</StartWebBrowser>
     <SearchPath>
     </SearchPath>
@@ -35,64 +34,20 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="public\favicon.ico" />
-    <Content Include="public\index.html" />
-    <Content Include="public\manifest.json" />
-    <Content Include="src\App.css" />
-    <Content Include="src\config\config.json">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="src\index.css" />
-    <Content Include="src\logo.svg" />
     <Content Include="tsconfig.json" />
     <Content Include="package.json" />
     <Content Include="README.md" />
-    <Content Include="tslint.json" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="public\" />
-    <Folder Include="src\" />
-    <Folder Include="src\components\" />
-    <Folder Include="src\components\Header\" />
-    <Folder Include="src\components\Header\components\" />
-    <Folder Include="src\components\Header\containers\" />
-    <Folder Include="src\container\" />
-    <Folder Include="src\layouts\" />
-    <Folder Include="src\models\" />
-    <Folder Include="src\modules\" />
-    <Folder Include="src\config\" />
-    <Folder Include="src\routes\" />
-    <Folder Include="src\routes\AddWorklog\" />
-    <Folder Include="src\routes\AddWorklog\components\" />
-    <Folder Include="src\routes\AddWorklog\containers\" />
-    <Folder Include="src\routes\Worklog\" />
-    <Folder Include="src\routes\Worklog\components\" />
-    <Folder Include="src\routes\Worklog\containers\" />
-    <Folder Include="src\store\" />
-    <Folder Include="src\types\" />
-  </ItemGroup>
-  <ItemGroup>
-    <TypeScriptCompile Include="src\App.test.tsx" />
-    <TypeScriptCompile Include="src\App.tsx" />
-    <TypeScriptCompile Include="src\components\Header\components\Header.tsx" />
-    <TypeScriptCompile Include="src\components\Header\containers\HeaderContainer.tsx" />
-    <TypeScriptCompile Include="src\components\Header\index.ts" />
-    <TypeScriptCompile Include="src\config\config.ts">
+    <TypeScriptCompile Include="src\app.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\container\AppContainer.tsx" />
-    <TypeScriptCompile Include="src\index.tsx" />
-    <TypeScriptCompile Include="src\layouts\CoreLayout.tsx" />
-    <TypeScriptCompile Include="src\models\Worklog.ts" />
-    <TypeScriptCompile Include="src\modules\worklog.ts" />
-    <TypeScriptCompile Include="src\registerServiceWorker.ts" />
-    <TypeScriptCompile Include="src\routes\AddWorklog\components\AddWorklog.tsx" />
-    <TypeScriptCompile Include="src\routes\AddWorklog\containers\AddWorklogContainer.tsx" />
-    <TypeScriptCompile Include="src\routes\index.tsx" />
-    <TypeScriptCompile Include="src\routes\Worklog\components\Worklog.tsx" />
-    <TypeScriptCompile Include="src\routes\Worklog\containers\WorklogContainer.tsx" />
-    <TypeScriptCompile Include="src\store\reducers.ts" />
-    <TypeScriptCompile Include="src\types\global.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="src\" />
+    <Folder Include="src\config\" />
+    <Folder Include="src\controllers\" />
+    <Folder Include="src\dao\" />
+    <Folder Include="src\models\" />
+    <Folder Include="src\routes\" />
   </ItemGroup>
   <!-- Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them. -->
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="False" />

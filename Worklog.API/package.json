@@ -1,0 +1,20 @@
+{
+  "name": "worklog.api",
+  "version": "0.0.0",
+  "description": "Worklog.API",
+  "main": "app.js",
+  "author": {
+    "name": "bgordon"
+  },
+  "devDependencies": {
+    "@types/node": "^6.0.87"
+  },
+  "dependencies": {
+    "async": "^2.6.0",
+    "debug": "^3.1.0",
+    "express": "^4.16.3",
+    "express-validator": "^5.1.0",
+    "jsonwebtoken": "^8.2.0",
+    "sequelize": "^4.37.5"
+  }
+}
