@@ -19,6 +19,7 @@ export namespace AddWorklogProps {
     export interface IProps extends IStateProps, IDispatchProps, IOwnProps { }
 
     export interface IState {
+        subject?: string;
         author?: string;
     }
 }

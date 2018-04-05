@@ -1,5 +1,12 @@
 import { IWorklog, IWorklogState, initialState, WorklogAction, WorklogsAction } from '../models/Worklog';
+import { CALL_API } from 'redux-api-middleware';
+import { IConfig, ISetting } from '../config/config';
 
+/*START: API STUFF PART 1 HERE*/
+const config: IConfig = require('../config/config.json');
+const settings: ISetting = config.settings[config.env];
+
+/*END: API DECLARATIONS*/
 export const WORKLOG_ADD = "WORKLOG_ADD";
 export const WORKLOG_LOAD = "WORKLOG_LOAD";
 

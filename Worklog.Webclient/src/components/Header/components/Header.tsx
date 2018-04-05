@@ -58,15 +58,6 @@ class Header extends React.Component<ICoreLayoutProps, IState> {
         );
     }
 }
-
-
-/**
-
-                <h2>Header</h2>
-<Button primary={true} onClick={this.toggle}>Toggle Visibility</Button>
-                <button><Link to="/">Worklog</Link></button>
-                <button><Link to="/addworklog">Add Worklog</Link></button>
-*/
 export default Header;
 
 
