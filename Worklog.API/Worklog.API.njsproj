@@ -6,7 +6,7 @@
     <Name>Worklog.API</Name>
     <RootNamespace>Worklog.API</RootNamespace>
     <Environment>NODE_ENV=development
-PORT=3306
+PORT=1337
 LOGGER_LEVEL=debug</Environment>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -23,7 +23,7 @@ LOGGER_LEVEL=debug</Environment>
     <OutputPath>.</OutputPath>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <ProjectTypeGuids>{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{349c5851-65df-11da-9384-00065b846f21};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
-    <NodejsPort>3306</NodejsPort>
+    <NodejsPort>1337</NodejsPort>
     <TypeScriptSourceMap>true</TypeScriptSourceMap>
     <TypeScriptModuleKind>CommonJS</TypeScriptModuleKind>
     <TypeScriptToolsVersion>2.5</TypeScriptToolsVersion>
@@ -52,6 +52,7 @@ LOGGER_LEVEL=debug</Environment>
     <TypeScriptCompile Include="src\routes\index.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="src\routes\worklog.ts" />
     <TypeScriptCompile Include="src\types\expressExtensions.d.ts" />
     <TypeScriptCompile Include="src\types\global.d.ts" />
   </ItemGroup>

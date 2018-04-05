@@ -22,11 +22,14 @@ export function addWorklog(worklog: IWorklog): ICallApiAction {
     return {
         [CALL_API]: {
             endpoint: `${settings.baseURL}:${settings.port}${settings.baseRoutePath}/worklog/addWorklog`,
-            method: 'GET',
+            method: 'POST',
             types: [ADD_WORKLOG_REQUEST, ADD_WORKLOG_RESPONSE, ADD_WORKLOG_ERROR],
             headers: {
                 'Content-Type': 'application/json'
-            }
+            },
+            body: JSON.stringify({
+                'worklog': worklog
+            })
         }
     };
 }

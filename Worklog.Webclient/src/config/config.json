@@ -3,8 +3,8 @@
   "settings": {
     "LOCAL": {
       "basedRoutePath": "/Worklog.API",
-      "port": "3306",
-      "baseURL": "http://localhost:8080",
+      "port": "1337",
+      "baseURL": "http://localhost",
       "refreshTokenTime": "150"
     }
   }

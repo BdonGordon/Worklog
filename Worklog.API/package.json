@@ -7,10 +7,15 @@
     "name": "bgordon"
   },
   "devDependencies": {
-    "@types/node": "^6.0.87"
+    "@types/node": "^6.0.104"
   },
   "dependencies": {
+    "@types/bluebird": "^3.5.20",
+    "@types/express": "^4.11.1",
+    "@types/express-validator": "^3.0.0",
+    "@types/sequelize": "^4.27.13",
     "async": "^2.6.0",
+    "bluebird": "^3.5.1",
     "body-parser": "^1.18.2",
     "cors": "^2.8.4",
     "debug": "^3.1.0",
@@ -20,6 +25,11 @@
     "jsonwebtoken": "^8.2.0",
     "morgan": "^1.9.0",
     "path": "^0.12.7",
-    "sequelize": "^4.37.5"
+    "react": "^16.3.1",
+    "react-dom": "^16.3.1",
+    "sequelize": "^4.37.5",
+    "tslint": "^5.9.1",
+    "typescript": "^2.8.1",
+    "typescript-formatter": "^7.1.0"
   }
 }
