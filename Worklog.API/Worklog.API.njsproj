@@ -49,6 +49,13 @@ LOGGER_LEVEL=debug</Environment>
     <TypeScriptCompile Include="src\config\config.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="src\controllers\worklogController.ts" />
+    <TypeScriptCompile Include="src\dao\index.ts" />
+    <TypeScriptCompile Include="src\dao\worklog.ts" />
+    <TypeScriptCompile Include="src\models\worklogModels\index.ts" />
+    <TypeScriptCompile Include="src\models\worklogModels\worklog.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="src\routes\index.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
@@ -62,6 +69,7 @@ LOGGER_LEVEL=debug</Environment>
     <Folder Include="src\controllers\" />
     <Folder Include="src\dao\" />
     <Folder Include="src\models\" />
+    <Folder Include="src\models\worklogModels\" />
     <Folder Include="src\types\" />
     <Folder Include="src\routes\" />
   </ItemGroup>
