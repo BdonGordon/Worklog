@@ -62,9 +62,6 @@
     <Folder Include="src\modules\" />
     <Folder Include="src\config\" />
     <Folder Include="src\routes\" />
-    <Folder Include="src\routes\AddWorklog\" />
-    <Folder Include="src\routes\AddWorklog\components\" />
-    <Folder Include="src\routes\AddWorklog\containers\" />
     <Folder Include="src\routes\Worklog\" />
     <Folder Include="src\routes\Worklog\components\" />
     <Folder Include="src\routes\Worklog\containers\" />
@@ -86,10 +83,10 @@
     <TypeScriptCompile Include="src\models\Worklog.ts" />
     <TypeScriptCompile Include="src\modules\worklog.ts" />
     <TypeScriptCompile Include="src\registerServiceWorker.ts" />
-    <TypeScriptCompile Include="src\routes\AddWorklog\components\AddWorklog.tsx" />
-    <TypeScriptCompile Include="src\routes\AddWorklog\containers\AddWorklogContainer.tsx" />
     <TypeScriptCompile Include="src\routes\index.tsx" />
+    <TypeScriptCompile Include="src\routes\Worklog\components\AddWorklog.tsx" />
     <TypeScriptCompile Include="src\routes\Worklog\components\Worklog.tsx" />
+    <TypeScriptCompile Include="src\routes\Worklog\containers\AddWorklogContainer.tsx" />
     <TypeScriptCompile Include="src\routes\Worklog\containers\WorklogContainer.tsx" />
     <TypeScriptCompile Include="src\store\reducers.ts" />
     <TypeScriptCompile Include="src\types\global.d.ts" />
