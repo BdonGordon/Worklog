@@ -1,9 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var http = require("http");
-var port = process.env.port || 1337;
-http.createServer(function (req, res) {
-    res.writeHead(200, { 'Content-Type': 'text/plain' });
-    res.end('Hello World\n');
-}).listen(port);
+var config = require('./config/config.json');
+var settings = config.settings[process.env.NODE_ENV];
+var App = /** @class */ (function () {
+    function App() {
+    }
+    //don't know what this stuff is 
+    App.bootstrap = function () {
+        return new App();
+    };
+    return App;
+}());
 //# sourceMappingURL=app.js.map

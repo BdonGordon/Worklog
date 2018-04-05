@@ -7,38 +7,42 @@ const config: IConfig = require('../config/config.json');
 const settings: ISetting = config.settings[config.env];
 
 /*END: API DECLARATIONS*/
-export const WORKLOG_REQUEST = "addWorklog/WORKLOG_REQUEST";
-export const WORKLOG_ADD = "addWorklog/WORKLOG_ADD";
-export const WORKLOG_ERROR = 'addWorklog/ADDWORKLOG_ERROR';
+export const ADD_WORKLOG_REQUEST = "worklog/ADD_WORKLOG_REQUEST";
+export const ADD_WORKLOG_RESPONSE = "worklog/ADD_WORKLOG_ADD";
+export const ADD_WORKLOG_ERROR = 'worklog/ADD_WORKLOG_ERROR';
+
+export const GET_WORKLOG_REQUEST = "worklog/GET_WORKLOG_REQUEST";
+export const GET_WORKLOG_RESPONSE = "worklog/GET_WORKLOG_ADD";
+export const GET_WORKLOG_ERROR = 'worklog/GET_ADDWORKLOG_ERROR';
+
 
 type WorklogActions = WorklogAction & WorklogsAction;
 
-/*
 export function addWorklog(worklog: IWorklog): ICallApiAction {
     return {
         [CALL_API]: {
             endpoint: `${settings.baseURL}:${settings.port}${settings.baseRoutePath}/worklog/addWorklog`,
             method: 'GET',
-            types: [WORKLOG_REQUEST, WORKLOG_ADD, WORKLOG_ERROR],
+            types: [ADD_WORKLOG_REQUEST, ADD_WORKLOG_RESPONSE, ADD_WORKLOG_ERROR],
             headers: {
                 'Content-Type': 'application/json'
             }
         }
     };
-}*/
-
+}
 
 /* OLD addWorklog without API call*/
 
+/*
 export function addWorklog(worklog: IWorklog): WorklogAction {
     return {
-        type: WORKLOG_ADD,
+        type: ADD_WORKLOG_RESPONSE,
         payload: {
             addedWorklog: worklog
         }
     };
 }
-
+*/
 
 /**
  * Reducer function 
@@ -47,7 +51,7 @@ export function addWorklog(worklog: IWorklog): WorklogAction {
  */
 export function worklogReducer(state: IWorklogState = initialState, action: WorklogActions) {
     switch (action.type) {
-        case WORKLOG_ADD:
+        case ADD_WORKLOG_RESPONSE:
             let list = state.worklogList.slice();
             list.unshift(action.payload.addedWorklog);
 

@@ -1,0 +1,17 @@
+﻿{
+  "settings": {
+    "development": {
+      "baseRoutePath": "/api",
+      "port": "3306",
+      "baseURL": "localhost",
+      "applicationURL": "http://localhost:3000/",
+      "worklogDB": {
+        "username": "bdongordon",
+        "password": "eKcuv256",
+        "database": "worklog",
+        "host": "localhost",
+        "force":  true
+      }
+    }
+  }
+}
