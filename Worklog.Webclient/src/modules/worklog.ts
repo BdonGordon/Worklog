@@ -7,10 +7,28 @@ const config: IConfig = require('../config/config.json');
 const settings: ISetting = config.settings[config.env];
 
 /*END: API DECLARATIONS*/
-export const WORKLOG_ADD = "WORKLOG_ADD";
-export const WORKLOG_LOAD = "WORKLOG_LOAD";
+export const WORKLOG_REQUEST = "addWorklog/WORKLOG_REQUEST";
+export const WORKLOG_ADD = "addWorklog/WORKLOG_ADD";
+export const WORKLOG_ERROR = 'addWorklog/ADDWORKLOG_ERROR';
 
 type WorklogActions = WorklogAction & WorklogsAction;
+
+/*
+export function addWorklog(worklog: IWorklog): ICallApiAction {
+    return {
+        [CALL_API]: {
+            endpoint: `${settings.baseURL}:${settings.port}${settings.baseRoutePath}/worklog/addWorklog`,
+            method: 'GET',
+            types: [WORKLOG_REQUEST, WORKLOG_ADD, WORKLOG_ERROR],
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+    };
+}*/
+
+
+/* OLD addWorklog without API call*/
 
 export function addWorklog(worklog: IWorklog): WorklogAction {
     return {
@@ -20,6 +38,7 @@ export function addWorklog(worklog: IWorklog): WorklogAction {
         }
     };
 }
+
 
 /**
  * Reducer function 
