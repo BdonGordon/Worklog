@@ -37,6 +37,7 @@ class App {
     //Configure Express middleware... don't know what this is either yet lol
     private middleware(): void {
         this.express.use(cors());
+        this.express.use(bodyParser.json({ limit: '50mb' }));
         this.express.use(bodyParser.urlencoded({
             extended: true
         }));
@@ -47,6 +48,11 @@ class App {
     //I don't think I need most of the things that are in this function based on SRED ... still idk what this is lol
     private verifyToken(): void {
         this.express.use(settings.baseRoutePath + '/', indexRoute);
+
+        this.express.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
+            req.params.decoded = true;
+            next();
+        });
     }
 
     private routes(): void {
@@ -66,6 +72,8 @@ class App {
         this.server.listen(this.port, () => {
             console.log('Running server on port %s', this.port);
         });
+
+        this.server.timeout = 0;
     }
 
     private handleExceptions(): void {

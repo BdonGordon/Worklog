@@ -3,7 +3,6 @@
 /**
 * Express Router for Index
 **/
-
 export class IndexRoute {
     public router: Router;
 

@@ -32,7 +32,6 @@ export default function defineWorklog(sequelize: Sequelize.Sequelize, dataTypes:
     }, {
             //Here is where we refer to the table name and any type of forgein keys.. what I have here should be enough
             tableName: 'tbworklogs',
-            timestamps: true
         });
 
     return Worklog;

@@ -58,7 +58,15 @@ class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps
             subject: this.state.subject,
             author: this.state.author
         };
-        this.props.addWorklog(worklog);
+        this.props.addWorklog(worklog).then((result) => {
+            if (result.error) {
+                console.log("Error while adding log : " +
+                    !!result.payload && !!result.payload.response ? result.payload.response.message : 'Unknown error');
+            }
+            else {
+                console.log("Log added successfully");
+            }
+        });
     }
   
     render() {

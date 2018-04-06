@@ -22,7 +22,6 @@ function defineWorklog(sequelize, dataTypes) {
         }
     }, {
         tableName: 'tbworklogs',
-        timestamps: true
     });
     return Worklog;
 }

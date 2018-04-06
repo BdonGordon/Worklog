@@ -14,12 +14,16 @@ export interface IWorklog {
 
 export interface IWorklogState {
     readonly isFetching: boolean;
+    readonly hasError: boolean;
+    readonly message: string | null;
     readonly worklog: IWorklog | null;
     readonly worklogList: Array<IWorklog>;
 }
 
 export const initialState: IWorklogState = {
     isFetching: false,
+    hasError: false,
+    message: null,
     worklog: null,
     worklogList: []
 };

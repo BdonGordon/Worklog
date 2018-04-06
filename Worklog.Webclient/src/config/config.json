@@ -2,7 +2,7 @@
   "env": "LOCAL",
   "settings": {
     "LOCAL": {
-      "basedRoutePath": "/Worklog.API",
+      "baseRoutePath": "/api",
       "port": "1337",
       "baseURL": "http://localhost",
       "refreshTokenTime": "150"

@@ -4,7 +4,7 @@
       "baseRoutePath": "/api",
       "port": "1337",
       "baseURL": "localhost",
-      "applicationURL": "http://localhost:3000/",
+      "applicationURL": "http://localhost:3000/worklog",
       "worklogDB": {
         "username": "bdongordon",
         "password": "eKcuv256",

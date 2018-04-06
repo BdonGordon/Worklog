@@ -26,6 +26,7 @@ class App {
     }
     middleware() {
         this.express.use(cors());
+        this.express.use(bodyParser.json({ limit: '50mb' }));
         this.express.use(bodyParser.urlencoded({
             extended: true
         }));
@@ -34,6 +35,10 @@ class App {
     }
     verifyToken() {
         this.express.use(settings.baseRoutePath + '/', index_1.default);
+        this.express.use((req, res, next) => {
+            req.params.decoded = true;
+            next();
+        });
     }
     routes() {
         this.express.use(settings.baseRoutePath + '/worklog', worklog_1.default);
@@ -48,6 +53,7 @@ class App {
         this.server.listen(this.port, () => {
             console.log('Running server on port %s', this.port);
         });
+        this.server.timeout = 0;
     }
     handleExceptions() {
         process.on('uncaughtException', (err) => {

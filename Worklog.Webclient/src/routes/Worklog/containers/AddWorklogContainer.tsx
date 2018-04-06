@@ -2,16 +2,19 @@
 import AddWorklog from '../components/AddWorklog';
 import { connect } from 'react-redux';
 import { addWorklog } from '../../../modules/worklog';
-import { IWorklog } from '../../../models/Worklog';
+import { IWorklog, WorklogsAction, WorklogAction } from '../../../models/Worklog';
 
 export namespace AddWorklogProps {
     export interface IStateProps {
         worklog: IWorklog | null;
+        isFetching: boolean;
+        hasError: boolean;
+        message: string | null;
         worklogList: Array<IWorklog>;
     }
 
     export interface IDispatchProps {
-        addWorklog: (worklog: IWorklog) => Promise<void>;
+        addWorklog: (worklog: IWorklog) => Promise<WorklogAction>;
     }
 
     export interface IOwnProps { }
@@ -31,13 +34,16 @@ export namespace AddWorklogProps {
 function mapStateToProps(state: any) {
     return {
         worklog: state.worklog.worklog,
+        isFetching: state.worklog.isFetching,
+        hasError: state.worklog.hasError,
+        message: state.worklog.message,
         worklogList: state.worklog.worklogList
     };
 }
 
 function mapDispatchToProps(dispatch: any) {
     return {
-        addWorklog: (worklog: IWorklog): Promise<void> => dispatch(addWorklog(worklog))
+        addWorklog: (worklog: IWorklog): Promise<WorklogAction> => dispatch(addWorklog(worklog))
     };
 }
 
