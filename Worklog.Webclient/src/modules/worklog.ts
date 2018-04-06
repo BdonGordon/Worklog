@@ -34,19 +34,6 @@ export function addWorklog(worklog: IWorklog): ICallApiAction {
     };
 }
 
-/* OLD addWorklog without API call*/
-
-/*
-export function addWorklog(worklog: IWorklog): WorklogAction {
-    return {
-        type: ADD_WORKLOG_RESPONSE,
-        payload: {
-            addedWorklog: worklog
-        }
-    };
-}
-*/
-
 /**
  * Reducer function 
  * @param state
@@ -70,7 +57,7 @@ export function worklogReducer(state: IWorklogState = initialState, action: Work
                 isFetching: false,
                 hasError: false,
                 message: null,
-                worklog: action.payload, //action.payload
+                worklog: action.payload, 
                 worklogList: list
             });
 

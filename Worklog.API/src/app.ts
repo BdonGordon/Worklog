@@ -37,7 +37,7 @@ class App {
     //Configure Express middleware... don't know what this is either yet lol
     private middleware(): void {
         this.express.use(cors());
-        this.express.use(bodyParser.json({ limit: '50mb' }));
+        this.express.use(bodyParser.json({ limit: '50mb' })); //THIS IS NEEDED. bodyParser is VERY IMPORTANT
         this.express.use(bodyParser.urlencoded({
             extended: true
         }));

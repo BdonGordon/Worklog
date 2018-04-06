@@ -5,8 +5,8 @@ import { IWorklog } from '../../../models/Worklog';
 import { Divider, Form, Label, TextArea, Button } from 'semantic-ui-react';
 
 const initialState: AddWorklogProps.IState = {
-    subject: '',
-    author: ''
+    Subject: '',
+    Author: ''
 };
 
 
@@ -27,13 +27,13 @@ class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps
 
     handleSubjectChange(e: React.FormEvent<HTMLInputElement>) {
         this.setState({
-            subject: e.currentTarget.value
+            Subject: e.currentTarget.value
         });
     }
 
     handleAuthorChange(e: React.FormEvent<HTMLInputElement>) {
         this.setState({
-            author: e.currentTarget.value
+            Author: e.currentTarget.value
         });
     }
 
@@ -55,8 +55,8 @@ class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps
     
     handleSubmit(e: React.FormEvent<HTMLButtonElement>) {
         let worklog: IWorklog = {
-            subject: this.state.subject,
-            author: this.state.author
+            Subject: this.state.Subject,
+            Author: this.state.Author
         };
         this.props.addWorklog(worklog).then((result) => {
             if (result.error) {

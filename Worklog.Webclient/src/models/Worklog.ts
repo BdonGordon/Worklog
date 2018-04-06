@@ -2,8 +2,8 @@ import { AnyAction } from 'redux';
 
 export interface IWorklog {
     date?: string;
-    subject?: string;
-    author: string;
+    Subject?: string;
+    Author: string;
     startTime?: string;
     endTime?: string;
     latestState?: string;
