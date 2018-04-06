@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import WorklogController from '../controllers/worklogController';
 
 export class Worklog {
     public router: Router;
@@ -9,7 +10,7 @@ export class Worklog {
     }
 
     private init(): void {
-
+        this.router.post('/addWorklog', WorklogController.addWorklog);
     }
 }
 

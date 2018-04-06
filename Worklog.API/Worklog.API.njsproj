@@ -8,6 +8,7 @@
     <Environment>NODE_ENV=development
 PORT=1337
 LOGGER_LEVEL=debug</Environment>
+    <LastActiveSolutionConfig>Debug|Any CPU</LastActiveSolutionConfig>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -52,6 +53,7 @@ LOGGER_LEVEL=debug</Environment>
     <TypeScriptCompile Include="src\controllers\worklogController.ts" />
     <TypeScriptCompile Include="src\dao\index.ts" />
     <TypeScriptCompile Include="src\dao\worklog.ts" />
+    <TypeScriptCompile Include="src\models\index.ts" />
     <TypeScriptCompile Include="src\models\worklogModels\index.ts" />
     <TypeScriptCompile Include="src\models\worklogModels\worklog.ts">
       <SubType>Code</SubType>
