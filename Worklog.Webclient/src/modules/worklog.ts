@@ -15,7 +15,6 @@ export const GET_WORKLOG_REQUEST = "worklog/GET_WORKLOG_REQUEST";
 export const GET_WORKLOG_RESPONSE = "worklog/GET_WORKLOG_RESPONSE";
 export const GET_WORKLOG_ERROR = 'worklog/GET_ADDWORKLOG_ERROR';
 
-
 type WorklogActions = WorklogAction & WorklogsAction;
 
 export function addWorklog(worklog: IWorklog): ICallApiAction {
@@ -51,7 +50,7 @@ export function worklogReducer(state: IWorklogState = initialState, action: Work
 
         case ADD_WORKLOG_RESPONSE:
             let list = state.worklogList.slice();
-            list.unshift(action.payload.addedWorklog);
+            list.unshift(action.payload.worklog);
 
             return Object.assign({}, state, {
                 isFetching: false,

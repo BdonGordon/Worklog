@@ -6,7 +6,7 @@ import { IWorklog, WorklogsAction, WorklogAction } from '../../../models/Worklog
 
 export namespace AddWorklogProps {
     export interface IStateProps {
-        worklog: IWorklog | null;
+        //worklog: IWorklog | null;
         isFetching: boolean;
         hasError: boolean;
         message: string | null;
@@ -33,7 +33,7 @@ export namespace AddWorklogProps {
  */
 function mapStateToProps(state: any) {
     return {
-        worklog: state.worklog.worklog,
+        //worklog: state.worklog.worklog,
         isFetching: state.worklog.isFetching,
         hasError: state.worklog.hasError,
         message: state.worklog.message,

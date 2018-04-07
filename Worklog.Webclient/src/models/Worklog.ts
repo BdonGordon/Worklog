@@ -31,7 +31,7 @@ export const initialState: IWorklogState = {
 export interface WorklogAction extends AnyAction {
     error?: boolean;
     payload: {
-        addedWorklog: IWorklog;
+        worklog: IWorklog;
         response?: {
             message?: string;
             error?: {};
