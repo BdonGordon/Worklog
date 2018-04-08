@@ -17,13 +17,23 @@ export namespace AddWorklogProps {
         addWorklog: (worklog: IWorklog) => Promise<WorklogAction>;
     }
 
-    export interface IOwnProps { }
+    export interface IOwnProps {
+    }
 
     export interface IProps extends IStateProps, IDispatchProps, IOwnProps { }
 
     export interface IState {
+        //START:Dialog state properties
+        errorDialogOpen?: boolean;
+        dialogSize?: any;
+        submitDialogOpen?: boolean;
+        //END: Dialog state properties
         Subject?: string;
         Author?: string;
+        DateCreated?: Date;
+        StartTime?: string;
+        HoursWorked?: number;
+        Description?: string;
     }
 }
 

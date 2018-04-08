@@ -1,4 +1,8 @@
-﻿export interface IWorklogDB {
+﻿/**
+* This is mandatory to set up the database
+**/
+
+export interface IWorklogDB {
     username: string;
     password: string;
     database: string;

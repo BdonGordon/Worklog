@@ -1,15 +1,12 @@
 import { AnyAction } from 'redux';
 
 export interface IWorklog {
-    date?: string;
     Subject?: string;
     Author: string;
-    startTime?: string;
-    endTime?: string;
-    latestState?: string;
-    goals?: string;
-    workDone?: string;
-    workToDo?: string;
+    DateCreated?: Date;
+    StartTime?: string;
+    HoursWorked?: number;
+    Description?: string;
 }
 
 export interface IWorklogState {

@@ -6,7 +6,11 @@ function addWorklog(worklog) {
     return index_1.worklogDB.Worklog.create({
         WorklogID: null,
         Subject: worklog.Subject,
-        Author: worklog.Author
+        Author: worklog.Author,
+        DateCreated: worklog.DateCreated,
+        StartTime: worklog.StartTime,
+        HoursWorked: worklog.HoursWorked,
+        Description: worklog.Description
     }).then((log) => {
         return index_1.worklogDB.Worklog.findOne({
             where: {

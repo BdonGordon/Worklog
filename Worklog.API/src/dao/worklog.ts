@@ -11,7 +11,11 @@ export function addWorklog(worklog: IWorklogAttributes): Promise<IWorklogAttribu
     return worklogDB.Worklog.create({
         WorklogID: null,
         Subject: worklog.Subject,
-        Author: worklog.Author
+        Author: worklog.Author,
+        DateCreated: worklog.DateCreated,
+        StartTime: worklog.StartTime,
+        HoursWorked: worklog.HoursWorked,
+        Description: worklog.Description
     }).then((log: IWorklogAttributes) => {
         return worklogDB.Worklog.findOne({
             where: {
