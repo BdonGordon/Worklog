@@ -40,6 +40,7 @@ export function addWorklog(worklog: IWorklog): ICallApiAction {
  */
 export function worklogReducer(state: IWorklogState = initialState, action: WorklogActions) {
     switch (action.type) {
+        //START: Adding a worklog
         case ADD_WORKLOG_REQUEST: {
             return Object.assign({}, state, {
                 isFetching: true,
@@ -48,7 +49,7 @@ export function worklogReducer(state: IWorklogState = initialState, action: Work
             });
         }
 
-        case ADD_WORKLOG_RESPONSE:
+        case ADD_WORKLOG_RESPONSE: {
             let list = state.worklogList.slice();
             list.unshift(action.payload.worklog);
 
@@ -56,9 +57,10 @@ export function worklogReducer(state: IWorklogState = initialState, action: Work
                 isFetching: false,
                 hasError: false,
                 message: null,
-                worklog: action.payload, 
+                worklog: action.payload,
                 worklogList: list
             });
+        }
 
         case ADD_WORKLOG_ERROR: {
             return Object.assign({}, state, {
@@ -67,6 +69,30 @@ export function worklogReducer(state: IWorklogState = initialState, action: Work
                 message: !!action.payload.response ? action.payload.response.message: 'Unknown error'
             });
         }
+        //END: Adding a worklog
+
+        //START: Worklog list
+        case GET_WORKLOG_REQUEST: {
+            return Object.assign({}, state, {
+                isFetching: true,
+                hasError: false,
+                message: null
+            });
+        }
+
+        case GET_WORKLOG_RESPONSE: {
+            return Object.assign({}, state, {
+                isFetching: false,
+                hasError: false,
+                message: null,
+                worklog: action.payload,
+                worklogList: action.payload.worklogs
+            });
+        }
+
+        case GET_WORKLOG_ERROR:
+
+        //END: Worklog list
 
         default:
             return state;
