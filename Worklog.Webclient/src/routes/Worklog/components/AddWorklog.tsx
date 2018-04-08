@@ -10,7 +10,7 @@ const initialState: AddWorklogProps.IState = {
     submitDialogOpen:  false,
     Subject: '',
     Author: '',
-    DateCreated: null,
+    DateCreated: new Date(Date.now()),
     StartTime: '',
     HoursWorked: 0,
     Description: ''
@@ -29,11 +29,12 @@ class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps
         this.handleHoursChange = this.handleHoursChange.bind(this);
         this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-
+        this.formSubmitReset = this.formSubmitReset.bind(this);
         //Submit dialog functions
         this.dialogShow = this.dialogShow.bind(this);
         this.dialogClose = this.dialogClose.bind(this);
         this.errorDialogShow = this.errorDialogShow.bind(this);
+
     }
 
     handleSubjectChange(e: React.FormEvent<HTMLInputElement>) {
@@ -103,6 +104,7 @@ class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps
         });
     }
 
+    //START: Submission Dialog (success/failure)
     dialogShow(dialogSize: any) {
         this.setState({
             dialogSize,
@@ -123,16 +125,23 @@ class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps
             errorDialogOpen: false
         });
     }
-  
+    //END: Submission Dialog (success/failure)
+
+    formSubmitReset(e: React.FormEvent<HTMLFormElement>) {
+        console.log("Submitted");
+        let form: HTMLFormElement = e.currentTarget;
+        form.reset();
+    }
+
     render() {
         const { submitDialogOpen, errorDialogOpen, dialogSize } = this.state;
 
         return (
             <div className="addlog-main-div">
                 <h4>Add Worklog component</h4>
-                <Form>
+                <Form onSubmit={this.formSubmitReset}>
                     <Form.Field inline={true}>
-                        <input type="text" placeholder="Subject" onChange={this.handleSubjectChange} />
+                        <input type="text" placeholder="Subject" onChange={this.handleSubjectChange}  />
                         <Label pointing="left">Enter Subject Name</Label>
                     </Form.Field>
 
@@ -142,7 +151,7 @@ class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps
                     </Form.Field>
 
                     <Form.Field inline={true}>
-                        <input type="date" placeholder="Date" onChange={this.handleDateChange}/>
+                        <input type="date" placeholder="Date" onChange={this.handleDateChange} />
                         <Label pointing="left">Enter Date</Label>
                     </Form.Field>
 
