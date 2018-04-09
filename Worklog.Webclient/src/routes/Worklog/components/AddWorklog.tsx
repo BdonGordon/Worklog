@@ -28,7 +28,6 @@ class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps
         this.handleStartTimeChange = this.handleStartTimeChange.bind(this);
         this.handleHoursChange = this.handleHoursChange.bind(this);
         this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
-        //this.handleSubmit = this.handleSubmit.bind(this);
         this.handleFormSubmit = this.handleFormSubmit.bind(this);
         //Submit dialog functions
         this.dialogShow = this.dialogShow.bind(this);
@@ -82,8 +81,9 @@ class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps
         });
     }
 
-    /*
-    handleSubmit(e: React.FormEvent<HTMLButtonElement>, form: React.FormEvent<HTMLFormElement>) {
+    handleFormSubmit(e: React.FormEvent<HTMLFormElement>) {
+
+        let form: HTMLFormElement = e.currentTarget;
         let worklog: IWorklog = {
             Subject: this.state.Subject,
             Author: this.state.Author,
@@ -101,9 +101,10 @@ class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps
             else {
                 console.log("Log added successfully");
                 this.dialogShow('mini');
+                form.reset();
             }
         });
-    }*/
+    }
 
     //START: Submission Dialog (success/failure)
     dialogShow(dialogSize: any) {
@@ -127,34 +128,6 @@ class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps
         });
     }
     //END: Submission Dialog (success/failure)
-
-    handleFormSubmit(e: React.FormEvent<HTMLFormElement> ) {
-        /*let form: HTMLFormElement = e.currentTarget;
-        if (this.state.submitDialogOpen) {
-            form.reset();
-        }*/
-        let form: HTMLFormElement = e.currentTarget;
-        let worklog: IWorklog = {
-            Subject: this.state.Subject,
-            Author: this.state.Author,
-            DateCreated: this.state.DateCreated,
-            StartTime: this.state.StartTime,
-            HoursWorked: this.state.HoursWorked,
-            Description: this.state.Description
-        };
-        this.props.addWorklog(worklog).then((result) => {
-            if (result.error) {
-                console.log("Error while adding log : " +
-                    !!result.payload && !!result.payload.response ? result.payload.response.message : 'Unknown error');
-                this.errorDialogShow('mini');
-            }
-            else {
-                console.log("Log added successfully");
-                this.dialogShow('mini');
-                form.reset();
-            }
-        });
-    }
 
     render() {
         const { submitDialogOpen, errorDialogOpen, dialogSize } = this.state;
