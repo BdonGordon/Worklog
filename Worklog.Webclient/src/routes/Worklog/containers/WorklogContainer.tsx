@@ -22,7 +22,14 @@ export namespace WorklogProps {
     export interface IProps extends IStateProps, IDispatchProps, IOwnProps { }
 
     export interface IState {
-
+        /**START: Cardview modal properties**/
+        isSelected?: boolean; //has a list item been selected
+        modalTitle?: string;
+        modalAuthor?: string;
+        modalDescription?: string;
+        modalTimestamp?: string;
+        modalDate?: string;
+        /**END: Cardview modal properties**/
     }
 }
 
