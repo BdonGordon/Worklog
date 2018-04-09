@@ -2,6 +2,7 @@
 import Worklog from '../components/Worklog';
 import { connect } from 'react-redux'; 
 import { IWorklog, WorklogsAction, WorklogAction } from '../../../models/Worklog';
+import { getWorklogs } from '../../../modules/worklog';
 
 export namespace WorklogProps {
     export interface IStateProps {
@@ -12,6 +13,7 @@ export namespace WorklogProps {
     }
 
     export interface IDispatchProps {
+        getWorklogs: () => Promise<WorklogsAction>;
     }
 
     export interface IOwnProps {
@@ -35,6 +37,7 @@ function mapStateToProps(state: any) {
 
 function mapDispatchToProps(dispatch: any) {
     return {
+        getWorklogs: (): Promise<WorklogsAction> => dispatch(getWorklogs())
     };
 }
 

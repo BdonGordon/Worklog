@@ -2,6 +2,20 @@ import { worklogDB } from '../models/index';
 import { IWorklogAttributes } from '../models/worklogModels/worklog';
 
 /**
+ * We will be retrieving an array of IWorklogs from the database hence the Signature of the Promise
+ */
+export function getWorklogs(): Promise<Array<IWorklogAttributes>> {
+    return worklogDB.Worklog.findAll();
+}
+
+/*
+include: [{
+            model: worklogDB.Worklog
+        }]
+*/
+
+
+/**
  * "Creates the given worklog, then returns the newly created worklog"
  * @param worklog
  */

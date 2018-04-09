@@ -10,21 +10,29 @@ class Worklog extends React.Component<WorklogProps.IProps, WorklogProps.IState> 
         this.createList = this.createList.bind(this);
     }
 
+    //componentMount() => initializeWorklogs() {this.props.getWorklogs}
+    componentDidMount() {
+        this.props.getWorklogs();
+    }
+
     createList() {
-        if (this.props.worklogList.length < 1) {
-            return null;
-        }
-        return this.props.worklogList.map((worklog) => {
-            return (
-                <List selection={true} verticalAlign='middle' size='small' key={worklog.StartTime} >
-                <List.Item>
-                    <List.Content>
-                        <List.Header className="cardview-list">{worklog.Subject}</List.Header>
-                        <List.Description>{worklog.Author}</List.Description>
-                    </List.Content>
-                </List.Item>
-                </List>);
+        if (this.props.worklogList.length > 0) {
+            return this.props.worklogList.map((worklog) => {
+                return (
+                    <List selection={true} verticalAlign='middle' size='small' key={worklog.WorklogID} >
+                        <List.Item>
+                            <List.Content>
+                                <List.Header className="cardview-list">{worklog.Subject}</List.Header>
+                                <List.Description>{worklog.Author}</List.Description>
+                            </List.Content>
+                        </List.Item>
+                    </List>
+                );
             });
+            //return <p>Hello</p>;
+        }
+
+        return <p>Bye</p>;
     }
 
     render() {

@@ -17,6 +17,10 @@ export const GET_WORKLOG_ERROR = 'worklog/GET_ADDWORKLOG_ERROR';
 
 type WorklogActions = WorklogAction & WorklogsAction;
 
+/**
+ * Adding worklogs
+ * @param worklog
+ */
 export function addWorklog(worklog: IWorklog): ICallApiAction {
     return {
         [CALL_API]: {
@@ -29,6 +33,22 @@ export function addWorklog(worklog: IWorklog): ICallApiAction {
             body: JSON.stringify({
                 'worklog': worklog
             })
+        }
+    };
+}
+
+/**
+ * Get all the worklogs from the database
+ */
+export function getWorklogs(): ICallApiAction {
+    return {
+        [CALL_API]: {
+            endpoint: `${settings.baseURL}:${settings.port}${settings.baseRoutePath}/worklog/getWorklogs`,
+            method: 'GET',
+            types: [GET_WORKLOG_REQUEST, GET_WORKLOG_RESPONSE, GET_WORKLOG_ERROR],
+            headers: {
+                'Content-Type': 'application/json'
+            }
         }
     };
 }
@@ -85,12 +105,17 @@ export function worklogReducer(state: IWorklogState = initialState, action: Work
                 isFetching: false,
                 hasError: false,
                 message: null,
-                worklog: action.payload,
-                worklogList: action.payload.worklogs
+                worklogList: action.payload.worklogList
             });
         }
 
-        case GET_WORKLOG_ERROR:
+        case GET_WORKLOG_ERROR: {
+            return Object.assign({}, state, {
+                isFetching: false,
+                hasError: true,
+                message: !!action.payload.response ? action.payload.response.message : 'Unknown error'
+            });
+        }
 
         //END: Worklog list
 

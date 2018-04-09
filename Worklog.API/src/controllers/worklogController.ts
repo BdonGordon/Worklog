@@ -8,6 +8,20 @@ import { IWorklogAttributes } from '../models/worklogModels/worklog';
 export class WorklogController {
 
     /**
+     *
+     * @param req
+     * @param res
+     * @param next
+     */
+    getWorklogs(req: Request, res: Response, next: NextFunction): Promise<void | Response> {
+        return WorklogDoa
+            .getWorklogs()
+            .then((worklogList: Array<IWorklogAttributes>) => res.status(200).send({
+                worklogList: worklogList
+        })).catch((error: Error) => next(error));
+    }
+
+    /**
      * Creates the given worklog, then returns the created worklog
      * @param req { Request } express.Request
      * @param res { Response } express.Response

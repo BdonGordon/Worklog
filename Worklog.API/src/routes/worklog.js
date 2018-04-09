@@ -8,6 +8,7 @@ class Worklog {
         this.init();
     }
     init() {
+        this.router.get('/getWorklogs', worklogController_1.default.getWorklogs);
         this.router.post('/addWorklog', worklogController_1.default.addWorklog);
     }
 }

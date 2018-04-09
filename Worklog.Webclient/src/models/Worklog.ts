@@ -1,6 +1,7 @@
 import { AnyAction } from 'redux';
 
 export interface IWorklog {
+    WorklogID?: number;
     Subject?: string;
     Author: string;
     DateCreated?: Date;
@@ -39,7 +40,7 @@ export interface WorklogAction extends AnyAction {
 export interface WorklogsAction extends AnyAction {
     error?: boolean;
     payload: {
-        worklogs: Array<IWorklog>;
+        worklogList: Array<IWorklog>;
         response?: {
             message?: string;
             error?: {};

@@ -1,6 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const index_1 = require("../models/index");
+function getWorklogs() {
+    return index_1.worklogDB.Worklog.findAll();
+}
+exports.getWorklogs = getWorklogs;
 function addWorklog(worklog) {
     let date = new Date();
     return index_1.worklogDB.Worklog.create({
