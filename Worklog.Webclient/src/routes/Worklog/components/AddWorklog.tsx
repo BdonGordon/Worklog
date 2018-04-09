@@ -28,8 +28,8 @@ class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps
         this.handleStartTimeChange = this.handleStartTimeChange.bind(this);
         this.handleHoursChange = this.handleHoursChange.bind(this);
         this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.formSubmitReset = this.formSubmitReset.bind(this);
+        //this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleFormSubmit = this.handleFormSubmit.bind(this);
         //Submit dialog functions
         this.dialogShow = this.dialogShow.bind(this);
         this.dialogClose = this.dialogClose.bind(this);
@@ -81,8 +81,9 @@ class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps
             Description: e.currentTarget.value
         });
     }
-    
-    handleSubmit(e: React.FormEvent<HTMLButtonElement>) {
+
+    /*
+    handleSubmit(e: React.FormEvent<HTMLButtonElement>, form: React.FormEvent<HTMLFormElement>) {
         let worklog: IWorklog = {
             Subject: this.state.Subject,
             Author: this.state.Author,
@@ -102,7 +103,7 @@ class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps
                 this.dialogShow('mini');
             }
         });
-    }
+    }*/
 
     //START: Submission Dialog (success/failure)
     dialogShow(dialogSize: any) {
@@ -127,10 +128,32 @@ class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps
     }
     //END: Submission Dialog (success/failure)
 
-    formSubmitReset(e: React.FormEvent<HTMLFormElement>) {
-        console.log("Submitted");
+    handleFormSubmit(e: React.FormEvent<HTMLFormElement> ) {
+        /*let form: HTMLFormElement = e.currentTarget;
+        if (this.state.submitDialogOpen) {
+            form.reset();
+        }*/
         let form: HTMLFormElement = e.currentTarget;
-        form.reset();
+        let worklog: IWorklog = {
+            Subject: this.state.Subject,
+            Author: this.state.Author,
+            DateCreated: this.state.DateCreated,
+            StartTime: this.state.StartTime,
+            HoursWorked: this.state.HoursWorked,
+            Description: this.state.Description
+        };
+        this.props.addWorklog(worklog).then((result) => {
+            if (result.error) {
+                console.log("Error while adding log : " +
+                    !!result.payload && !!result.payload.response ? result.payload.response.message : 'Unknown error');
+                this.errorDialogShow('mini');
+            }
+            else {
+                console.log("Log added successfully");
+                this.dialogShow('mini');
+                form.reset();
+            }
+        });
     }
 
     render() {
@@ -139,7 +162,7 @@ class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps
         return (
             <div className="addlog-main-div">
                 <h4>Add Worklog component</h4>
-                <Form onSubmit={this.formSubmitReset}>
+                <Form onSubmit={this.handleFormSubmit}>
                     <Form.Field inline={true}>
                         <input type="text" placeholder="Subject" onChange={this.handleSubjectChange}  />
                         <Label pointing="left">Enter Subject Name</Label>
@@ -171,7 +194,7 @@ class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps
                         <Label pointing="above">Enter Description</Label>
                     </Form.Field>
                     <Divider />
-                    <Button secondary={true} onClick={this.handleSubmit}>Submit</Button>
+                    <Button secondary={true}>Submit</Button>
                 </Form>
 
                 {/*This is the dialog for the positive */}

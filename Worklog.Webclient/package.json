@@ -16,15 +16,13 @@
     "semantic-ui-react": "^0.79.0"
   },
   "scripts": {
-    "start": "npm-run-all -p build-css watch-css start-ts",
-    "build": "npm-run-all -p build-css build-ts",
-    "test": "react-scripts-ts test --env=jsdom",
-    "eject": "react-scripts-ts eject",
-    "checkout-css": "tf.exe vc checkout /recursive *.css",
     "build-css": "node-sass-chokidar src/ -o src/",
     "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
-    "start-ts": "react-scripts-ts start",
-    "build-ts": "react-scripts-ts build"
+    "start-js": "react-scripts-ts start",
+    "start": "npm-run-all -p watch-css start-js",
+    "build": "npm run build-css && react-scripts-ts build",
+    "test": "react-scripts-ts test --env=jsdom",
+    "eject": "react-scripts-ts eject"
   },
   "devDependencies": {
     "@types/jest": "^22.2.2",
