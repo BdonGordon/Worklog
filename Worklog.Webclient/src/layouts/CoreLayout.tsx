@@ -1,15 +1,19 @@
 ﻿import * as React from 'react';
 import { BrowserRouter, Route, NavLink, Link  } from 'react-router-dom';
 import Routes from '../routes/index';
-import Header from '../components/Header/containers/HeaderContainer';
-import { Sidebar, Segment, Button, Menu, Image, Icon } from 'semantic-ui-react';
+//import Header from '../components/Header/containers/HeaderContainer';
+import { Sidebar, Segment, Button, Menu, Image, Icon, Header } from 'semantic-ui-react';
 import '../App.css';
+import '../core.css';
+
+export interface ICoreLayoutProps {
+}
 
 export interface IState {
     isVisible: boolean;
 }
 
-class CoreLayout extends React.Component<null, IState> {
+class CoreLayout extends React.Component<ICoreLayoutProps, IState> {
     constructor(props) {
         super(props);
 
@@ -30,26 +34,18 @@ class CoreLayout extends React.Component<null, IState> {
 
         return (
             <BrowserRouter>
-                <div>
-                    <Sidebar.Pushable as={Segment}>
-                        <Sidebar as={Menu} animation='push' direction='left' width='thin' visible={this.state.isVisible} icon='labeled' vertical={true} inverted={true}>
-                            {/*as={Link} to='/'*/} 
-                            <Menu.Item name='home' as={Link} to='/'>
-                                <Icon name='home' />
-                                Home
-                        </Menu.Item>
-                            {/*as={Link} to='/addworklog'*/}
-                            <Menu.Item name='write' as={Link} to='/addworklog'>
-                                <Icon name='write' />
-                                Add Worklog
-                        </Menu.Item>
-                        </Sidebar>
-                        <Sidebar.Pusher>
-                            <Segment>
-                                <Routes />   
-                            </Segment>
-                        </Sidebar.Pusher>
-                    </Sidebar.Pushable>
+                <div className="core-layout__viewport" style={{ margin: 0, padding: 0, height: '100%' }}>
+                    <div className="layoutMain">
+                        <div className="layoutHeader">
+                            <Header as='h2' block={true}>
+                                Hey
+                            </Header>
+                        </div>
+
+                        <div className="layoutRoutes">
+                            <Routes/>
+                        </div>
+                    </div>
                 </div>
             </BrowserRouter>
         );
