@@ -45,6 +45,7 @@
     </Content>
     <Content Include="src\index.css" />
     <Content Include="src\logo.svg" />
+    <Content Include="src\store\createStore.ts" />
     <Content Include="tsconfig.json" />
     <Content Include="package.json" />
     <Content Include="README.md" />

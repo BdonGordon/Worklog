@@ -1,29 +1,21 @@
 ﻿import * as React from 'react';
 import CoreLayout from '../layouts/CoreLayout';
-import { Provider, Store } from 'react-redux';
-import { createStore, applyMiddleware, compose } from 'redux';
-import makeRootReducer from '../store/reducers';
-import thunk from 'redux-thunk';
-import { apiMiddleware } from 'redux-api-middleware';
+import { Store } from 'redux';
+import { Provider } from 'react-redux';
 
-const composeEnhancers = (typeof window === 'object' &&
-    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
+interface IAppContainer extends React.Props<any> {
+    store: Store<any>;
+}
 
-const middlewares: any = [
-    //throttleActions([REFRESH_TOKEN_REQUEST], 2500),
-    apiMiddleware,
-    thunk
-];
-
-export const store = createStore(
-    makeRootReducer, composeEnhancers(applyMiddleware(...middlewares))
-);
-
-class AppContainer extends React.Component {
+class AppContainer extends React.Component<IAppContainer, {}> {
     render() {
+        const { store } = this.props;
+
         return (
             <Provider store={store}>
-                <CoreLayout />
+                <div style={{ height: '100%' }}>
+                    <CoreLayout />
+                </div>
             </Provider>
         );
     }

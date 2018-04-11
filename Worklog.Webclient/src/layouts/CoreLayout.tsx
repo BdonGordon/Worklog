@@ -45,7 +45,7 @@ class CoreLayout extends React.Component<null, IState> {
                         </Menu.Item>
                         </Sidebar>
                         <Sidebar.Pusher>
-                            <Segment className="addlog-main-div">
+                            <Segment>
                                 <Routes />   
                             </Segment>
                         </Sidebar.Pusher>
