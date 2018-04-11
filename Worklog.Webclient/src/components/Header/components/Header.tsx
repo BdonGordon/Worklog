@@ -37,7 +37,7 @@ class Header extends React.Component<ICoreLayoutProps, IState> {
 
         return (
             <div >
-                <Sidebar.Pushable as={Segment} className="menu-bar-details">
+                <Sidebar.Pushable as={Segment}>
                     <Sidebar as={Menu} animation='overlay' direction='top' width='thin' visible={true} icon='labeled' vertical={false} inverted={true}>
                         <Menu.Item name='home' as={Link} to='/' >
                             <Icon name='home' />

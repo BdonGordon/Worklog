@@ -81,7 +81,7 @@ class Worklog extends React.Component<WorklogProps.IProps, WorklogProps.IState> 
 
     render() {
         return (
-            <div className="addlog-main-div">
+            <div>
                 <h4>Worklog</h4>
                 <div>
                     <ul>

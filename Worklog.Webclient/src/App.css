@@ -35,7 +35,8 @@
 }
 
 .addlog-main-div {
-    padding: 12px;
+    background-color: #41474d;
+    height: 95vh;
 }
 
 .addlog-text-area {
