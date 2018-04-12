@@ -21,15 +21,15 @@ body, html {
     overflow: hidden;
     width: 100%;
     .header {
-    z-index: 999;
-    height: 100%;
-    width: 100%;
-    line-height: 35px;
-    margin: 0;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
+        z-index: 999;
+        height: 100%;
+        width: 100%;
+        line-height: 35px;
+        margin: 0;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
     }
 }
 

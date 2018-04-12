@@ -1,10 +1,8 @@
 ﻿import * as React from 'react';
 import { BrowserRouter, Route, NavLink, Link  } from 'react-router-dom';
 import Routes from '../routes/index';
-import NavDrawer from '../components/Header/containers/HeaderContainer';
+import NavDrawer from '../components/Header/containers/NavDrawerContainer';
 import { Sidebar, Segment, Button, Menu, Image, Icon, Header } from 'semantic-ui-react';
-import '../App.css';
-import '../core.scss';
 
 export interface ICoreLayoutProps {
 }
@@ -37,13 +35,15 @@ class CoreLayout extends React.Component<ICoreLayoutProps, IState> {
                 <div className="core-layout__viewport" style={{ margin: 0, padding: 0, height: '100%' }}>
                     <div className="layoutMain">
                         <div className="layoutHeader">
-                            <Header as='h2' block={true}>
-                                Hey
-                            </Header>
+                            <h4>Worklog - Tasks Journal</h4>
                         </div>
 
                         <div className="layoutRoutes">
-                            <Routes/>
+                            <h4>Routes</h4>
+                        </div>
+
+                        <div className="layoutFooter">
+                            <h4>Footer</h4>
                         </div>
                     </div>
                 </div>

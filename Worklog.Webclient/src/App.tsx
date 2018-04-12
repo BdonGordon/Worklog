@@ -1,5 +1,6 @@
 import * as React from 'react';
 import './App.css';
+import './core.css'; //NEEDS TO BE INCLUDED to make UI happen; produced by core.scss
 import AppContainer from './container/AppContainer';
 import { BrowserRouter } from 'react-router-dom';
 import { Store } from 'redux';

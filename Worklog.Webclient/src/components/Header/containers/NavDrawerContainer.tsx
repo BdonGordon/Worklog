@@ -1,5 +1,5 @@
 ﻿import * as React from 'react';
-import NavDrawer from '../components/Header';
+import NavDrawer from '../components/NavDrawer';
 import { connect } from 'react-redux';
 
 function mapStateToProps(state: any) {

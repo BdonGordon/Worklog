@@ -74,8 +74,8 @@
   <ItemGroup>
     <TypeScriptCompile Include="src\App.test.tsx" />
     <TypeScriptCompile Include="src\App.tsx" />
-    <TypeScriptCompile Include="src\components\Header\components\Header.tsx" />
-    <TypeScriptCompile Include="src\components\Header\containers\HeaderContainer.tsx" />
+    <TypeScriptCompile Include="src\components\Header\components\NavDrawer.tsx" />
+    <TypeScriptCompile Include="src\components\Header\containers\NavDrawerContainer.tsx" />
     <TypeScriptCompile Include="src\components\Header\index.ts" />
     <TypeScriptCompile Include="src\config\config.ts">
       <SubType>Code</SubType>
