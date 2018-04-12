@@ -12,7 +12,7 @@ body, html {
   position: absolute;
   top: 0px;
   right: 0px;
-  height: 106px;
+  height: 60px;
   overflow: hidden;
   width: 100%; }
   .layoutHeader .header {
@@ -28,8 +28,8 @@ body, html {
 
 .layoutRoutes {
   position: absolute;
-  top: 106px;
-  bottom: 28px;
+  top: 60px;
+  bottom: 0px;
   left: 0px;
   right: 0px;
   overflow: auto !important; }
@@ -37,7 +37,7 @@ body, html {
 .layoutFooter {
   position: absolute;
   bottom: 0px;
-  height: 28px;
+  height: 0px;
   left: 0px;
   right: 0px;
   overflow: hidden;

@@ -32,9 +32,9 @@ class NavDrawer extends React.Component<ICoreLayoutProps, IState> {
         const { isVisible } = this.state;
 
         return (
-            <div style={{ margin: 0, padding: 0, height: '100%' }}>
+            <div style={{ margin: 0, padding: 0, height: '100%'}}>
                 <Sidebar.Pushable as={Segment}>
-                    <Sidebar as={Menu} animation='push' direction='left' width='thin' visible={this.state.isVisible} icon='labeled' vertical={true} inverted={true}>
+                    <Sidebar as={Menu} animation='overlay' direction='bottom' width='thin' visible={true} icon='labeled' vertical={false} inverted={true}>
                         {/*as={Link} to='/'*/}
                         <Menu.Item name='home' as={Link} to='/'>
                             <Icon name='home' />
@@ -46,11 +46,10 @@ class NavDrawer extends React.Component<ICoreLayoutProps, IState> {
                             Add Worklog
                     </Menu.Item>
                     </Sidebar>
-                    <Sidebar.Pusher>
-                        <Segment>
+                    <Sidebar.Pusher style={{ backgroundColor: '#545556', borderColor: '#545556'}}>
+                        <div style={{ padding: '15px', backgroundColor: '#545556', borderColor: '#545556' }}>
                             {this.props.children}
-                            <Button secondary={true} onClick={this.toggleVisibility}>Menu</Button>
-                        </Segment>
+                        </div>
                     </Sidebar.Pusher>
                 </Sidebar.Pushable>
             </div>
@@ -59,4 +58,7 @@ class NavDrawer extends React.Component<ICoreLayoutProps, IState> {
 }
 export default NavDrawer;
 
+//style={{position: 'absolute', bottom: '0px'}}
+
+//                            <Button secondary={true} onClick={this.toggleVisibility}>Menu</Button>
 

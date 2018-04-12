@@ -1,6 +1,6 @@
 ﻿import * as React from 'react';
 import { withRouter } from 'react-router-dom';
-import { Button, Header, Image, Modal, List, Icon } from 'semantic-ui-react';
+import { Button, Header, Image, Modal, List, Icon, Grid, Divider } from 'semantic-ui-react';
 import { WorklogProps } from '../containers/WorklogContainer';
 import { IWorklog } from '../../../models/Worklog';
 
@@ -82,13 +82,25 @@ class Worklog extends React.Component<WorklogProps.IProps, WorklogProps.IState> 
     render() {
         return (
             <div>
-                <h4>Worklog</h4>
-                <div>
-                    <ul>
-                        {this.createList()}
-                    </ul>
+                {/*Main component layout*/}
+                <div style={{ textAlign: 'center' }}>
+                    <Grid columns={3}>
+                        <Grid.Column>
+                            <h2>Worklog</h2>
+                            <ul>
+                                {this.createList()}
+                            </ul>
+                        </Grid.Column>
+                        <Grid.Column>
+                            <Divider vertical={true} fitted={true} style={{ height: '100%' }}></Divider>
+                        </Grid.Column>
+                        <Grid.Column>
+                            <h2>Tasks to Complete</h2>
+                        </Grid.Column>
+                    </Grid>
                 </div>
 
+                {/*Modal to show the worklog that has been pressed*/}
                 <Modal size='small' className='dialog-position' open={this.state.isSelected} closeIcon={true} onClose={this.modalClose} closeOnEscape={true}>
                     <Modal.Header>{this.state.modalTitle} <small><i>by</i></small> <small>{this.state.modalAuthor} - {this.state.modalDate}</small></Modal.Header>
                     <Modal.Description>

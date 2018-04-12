@@ -35,16 +35,19 @@ class CoreLayout extends React.Component<ICoreLayoutProps, IState> {
                 <div className="core-layout__viewport" style={{ margin: 0, padding: 0, height: '100%' }}>
                     <div className="layoutMain">
                         <div className="layoutHeader">
-                            <h4>Worklog - Tasks Journal</h4>
+                            <div style={{ textAlign: 'center' }}>
+                                <Segment style={{ backgroundColor: '#1b1c1d' }}>
+                                    <h2 style={{ color: 'white' }}> Worklog - Tasks Journal </h2>
+                                </Segment>    
+                            </div>
                         </div>
 
                         <div className="layoutRoutes">
-                            <h4>Routes</h4>
+                            <NavDrawer>
+                                <Routes />
+                            </NavDrawer>
                         </div>
-
-                        <div className="layoutFooter">
-                            <h4>Footer</h4>
-                        </div>
+                        
                     </div>
                 </div>
             </BrowserRouter>

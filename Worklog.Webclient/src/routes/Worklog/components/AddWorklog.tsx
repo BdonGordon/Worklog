@@ -133,7 +133,7 @@ class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps
         const { submitDialogOpen, errorDialogOpen, dialogSize } = this.state;
 
         return (
-            <div>
+            <div style={{ textAlign: 'center' }}>
                 <h4>Add Worklog component</h4>
                 <Form onSubmit={this.handleFormSubmit}>
                     <Form.Field inline={true}>
