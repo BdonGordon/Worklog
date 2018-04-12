@@ -56,9 +56,9 @@
     <Folder Include="public\" />
     <Folder Include="src\" />
     <Folder Include="src\components\" />
-    <Folder Include="src\components\Header\" />
-    <Folder Include="src\components\Header\components\" />
-    <Folder Include="src\components\Header\containers\" />
+    <Folder Include="src\components\MenuBar\" />
+    <Folder Include="src\components\MenuBar\components\" />
+    <Folder Include="src\components\MenuBar\containers\" />
     <Folder Include="src\container\" />
     <Folder Include="src\layouts\" />
     <Folder Include="src\models\" />
@@ -74,9 +74,8 @@
   <ItemGroup>
     <TypeScriptCompile Include="src\App.test.tsx" />
     <TypeScriptCompile Include="src\App.tsx" />
-    <TypeScriptCompile Include="src\components\Header\components\NavDrawer.tsx" />
-    <TypeScriptCompile Include="src\components\Header\containers\NavDrawerContainer.tsx" />
-    <TypeScriptCompile Include="src\components\Header\index.ts" />
+    <TypeScriptCompile Include="src\components\MenuBar\components\MenuBar.tsx" />
+    <TypeScriptCompile Include="src\components\MenuBar\containers\MenuBarContainer.tsx" />
     <TypeScriptCompile Include="src\config\config.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>

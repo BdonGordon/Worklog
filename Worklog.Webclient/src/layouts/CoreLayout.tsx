@@ -1,7 +1,7 @@
 ﻿import * as React from 'react';
 import { BrowserRouter, Route, NavLink, Link  } from 'react-router-dom';
 import Routes from '../routes/index';
-import NavDrawer from '../components/Header/containers/NavDrawerContainer';
+import MenuBar from '../components/MenuBar/containers/MenuBarContainer';
 import { Sidebar, Segment, Button, Menu, Image, Icon, Header } from 'semantic-ui-react';
 
 export interface ICoreLayoutProps {
@@ -36,16 +36,12 @@ class CoreLayout extends React.Component<ICoreLayoutProps, IState> {
                     <div className="layoutMain">
                         <div className="layoutHeader">
                             <div style={{ textAlign: 'center' }}>
-                                <Segment style={{ backgroundColor: '#1b1c1d' }}>
-                                    <h2 style={{ color: 'white' }}> Worklog - Tasks Journal </h2>
-                                </Segment>    
+                                <MenuBar/>
                             </div>
                         </div>
 
                         <div className="layoutRoutes">
-                            <NavDrawer>
-                                <Routes />
-                            </NavDrawer>
+                            <Routes />
                         </div>
                         
                     </div>

@@ -2,7 +2,7 @@
 import { withRouter } from 'react-router-dom';
 import { AddWorklogProps } from '../containers/AddWorklogContainer';
 import { IWorklog } from '../../../models/Worklog';
-import { Divider, Form, Label, TextArea, Button, Modal, Accordion, Icon } from 'semantic-ui-react';
+import { Divider, Form, Label, TextArea, Button, Modal, Accordion, Icon, List, Segment } from 'semantic-ui-react';
 import * as moment from 'moment';
 
 const initialState: AddWorklogProps.IState = {
@@ -14,22 +14,9 @@ const initialState: AddWorklogProps.IState = {
     StartTime: '',
     HoursWorked: 0,
     Description: '',
-    activeIndex: 1
+    activeIndex: 0,
+    tasksInput: new Array()
 };
-
-
-const todoPanel = [
-    {
-        title: 'Optional: Remaining Tasks',
-        content: {
-            as: Form.Input,
-            key: 'content',
-            label: 'Hello',
-            pointing: 'left',
-            placeholder: 'Date of expected completion'
-        },
-    },
-]
 
 class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps.IState> {
     //: AddWorklogProps.IProps
@@ -48,7 +35,9 @@ class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps
         this.dialogClose = this.dialogClose.bind(this);
         this.errorDialogShow = this.errorDialogShow.bind(this);
         //Accordian
-        this.handleOptional = this.handleOptional.bind(this);
+        this.handleOptionalVisibility = this.handleOptionalVisibility.bind(this);
+        this.handleAddTask = this.handleAddTask.bind(this);
+        this.createNewTask = this.createNewTask.bind(this);
     }
 
     handleSubjectChange(e: React.FormEvent<HTMLInputElement>) {
@@ -95,8 +84,12 @@ class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps
             Description: e.currentTarget.value
         });
     }
-
-    handleOptional(e, titleProps) {
+    /**
+     * This toggles the visibility of the fields of the OPTIONAL Remaining Tasks
+     * @param e
+     * @param titleProps
+     */
+    handleOptionalVisibility(e, titleProps) {
         const { index } = titleProps;
         const { activeIndex } = this.state;
         const newIndex = activeIndex === index ? -1 : index;
@@ -104,8 +97,33 @@ class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps
         this.setState({ activeIndex: newIndex });
     }
 
-    handleFormSubmit(e: React.FormEvent<HTMLFormElement>) {
+    handleAddTask() {
+        let newTask: Array<any> = this.state.tasksInput;
+        let newInput = (
+            <input type="text" placeholder="Task Title" />
+        );
+        let num: number;
 
+        newTask.push(newInput);
+
+        this.setState({
+            tasksInput: newTask
+        });
+
+        console.log(this.state.tasksInput.length);
+    }
+
+    createNewTask() {
+        let newTask = this.state.tasksInput;
+
+        return (
+            newTask.map((input, index) => {
+                return <List key={index}> {input} </List>;
+            })
+        );
+    }
+
+    handleFormSubmit(e: React.FormEvent<HTMLFormElement>) {
         let form: HTMLFormElement = e.currentTarget;
         let worklog: IWorklog = {
             Subject: this.state.Subject,
@@ -160,7 +178,7 @@ class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps
                 <h4>Add Worklog component</h4>
 
                 {/*START: Main component*/}
-                <Form onSubmit={this.handleFormSubmit}>
+                <Form onSubmit={this.handleFormSubmit} >
                     <Form.Field inline={true}>
                         <input type="text" placeholder="Subject" onChange={this.handleSubjectChange}  />
                         <Label pointing="left">Enter Subject Name</Label>
@@ -196,11 +214,12 @@ class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps
                     </Form.Field>
 
                     <Accordion>
-                        <Accordion.Title active={activeIndex === 0} index={0} onClick={this.handleOptional} style={{color: 'white'}}>
+                        <Accordion.Title active={activeIndex === 0} index={0} onClick={this.handleOptionalVisibility} style={{color: 'white'}}>
                             <Icon name='dropdown'/>
                             Optional: Remaining Tasks
                         </Accordion.Title>
                         <Accordion.Content active={activeIndex === 0}>
+                            
                             {/*Due date input*/}
                             <Form.Field inline={true}>
                                 <input type="date" placeholder="Expected Date of Completion" />
@@ -210,14 +229,19 @@ class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps
                             {/**Task list input*/}
                             <Form.Field>
                                 <Label pointing='below'>Tasks</Label>
-                                <br/>
-                                <TextArea placeholder="- List of remaining tasks" style={{ width: '15%', resize: 'none'}}/>
+                                <br />
+                                <div>
+                                    {this.createNewTask()}
+                                </div>
                             </Form.Field>
+                            <Label onClick={this.handleAddTask} style={{ cursor: ' pointer', backgroundColor: '#777777' }}>
+                                <Icon name='plus' color='green' />
+                                Add Task
+                            </Label>
                         </Accordion.Content>
                     </Accordion>
-
                     <Divider />
-                    <Button secondary={true}>Submit</Button>
+                    <Button secondary={true} type="submit">Submit</Button>
                 </Form>
                 {/*END: Main component*/}
 

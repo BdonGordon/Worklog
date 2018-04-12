@@ -36,6 +36,7 @@ export namespace AddWorklogProps {
         Description?: string;
         //OPTIONAL input
         activeIndex?: number;
+        tasksInput?: Array<any>;
     }
 }
 
