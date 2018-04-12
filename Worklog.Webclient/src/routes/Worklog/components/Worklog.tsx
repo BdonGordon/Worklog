@@ -1,6 +1,6 @@
 ﻿import * as React from 'react';
 import { withRouter } from 'react-router-dom';
-import { Button, Header, Image, Modal, List, Icon, Grid, Divider } from 'semantic-ui-react';
+import { Button, Header, Image, Modal, List, Icon, Grid, Divider, Accordion } from 'semantic-ui-react';
 import { WorklogProps } from '../containers/WorklogContainer';
 import { IWorklog } from '../../../models/Worklog';
 
@@ -10,7 +10,8 @@ const initialState: WorklogProps.IState = {
     modalAuthor: '',
     modalDescription: '',
     modalTimestamp: '',
-    modalDate: ''
+    modalDate: '',
+    week: new Array()
 };
 
 class Worklog extends React.Component<WorklogProps.IProps, WorklogProps.IState> {
@@ -19,7 +20,8 @@ class Worklog extends React.Component<WorklogProps.IProps, WorklogProps.IState> 
 
         this.state = initialState;
 
-        this.createList = this.createList.bind(this);
+        this.renderWorklogList = this.renderWorklogList.bind(this);
+        this.renderWeekList = this.renderWeekList.bind(this);
         this.handleLogClick = this.handleLogClick.bind(this);
         this.modalClose = this.modalClose.bind(this);
     }
@@ -27,6 +29,7 @@ class Worklog extends React.Component<WorklogProps.IProps, WorklogProps.IState> 
     //componentMount() => initializeWorklogs() {this.props.getWorklogs}
     componentDidMount() {
         this.props.getWorklogs();
+        this.createWeekList();
     }
 
     /**
@@ -35,10 +38,10 @@ class Worklog extends React.Component<WorklogProps.IProps, WorklogProps.IState> 
      */
     handleLogClick(worklog: IWorklog) {
         let date: Date = new Date(worklog.DateCreated);
-        let dateString = date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric'});
+        let dateString = date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
         //let dateString = date.toUTCString().substr(date.toUTCString.length - 12, date.toUTCString.length);
 
-        console.log(dateString);
+        //console.log(dateString);
 
         this.setState({
             isSelected: true,
@@ -59,7 +62,7 @@ class Worklog extends React.Component<WorklogProps.IProps, WorklogProps.IState> 
         });
     }
 
-    createList() {
+    renderWorklogList() {
         if (this.props.worklogList.length > 0) {
             return this.props.worklogList.map((worklog) => {
                 return (
@@ -79,6 +82,36 @@ class Worklog extends React.Component<WorklogProps.IProps, WorklogProps.IState> 
         return <p>Bye</p>;
     }
 
+    /**
+     * Create the list of the next 7 days
+     */
+    createWeekList() {
+        let date: Date = new Date(Date.now());
+        let index: number;
+        let nextDay: Date = new Date();
+        let dateString: string;
+        let week: Array<string> = new Array();
+
+        for (index = 0; index < 7; index++){
+            nextDay.setDate(date.getDate() + index);
+            dateString = nextDay.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+            week.push(dateString);
+        }
+        this.setState({
+            week: week
+        });
+    }
+
+    /**
+     * Display the list in the component
+     */
+    renderWeekList() {
+        return (this.state.week.map((day) => {
+            return <li key={day}>{day}</li>;
+        }));
+        
+    }
+
     render() {
         return (
             <div>
@@ -88,14 +121,17 @@ class Worklog extends React.Component<WorklogProps.IProps, WorklogProps.IState> 
                         <Grid.Column>
                             <h2>Worklog</h2>
                             <ul>
-                                {this.createList()}
+                                {this.renderWorklogList()}
                             </ul>
                         </Grid.Column>
                         <Grid.Column>
-                            <Divider vertical={true} fitted={true} style={{ height: '100%' }}></Divider>
+                            <Divider vertical={true} fitted={true} style={{ height: '100%' }}/>
                         </Grid.Column>
                         <Grid.Column>
                             <h2>Tasks to Complete</h2>
+                            <ul>
+                                {this.renderWeekList()}
+                            </ul>
                         </Grid.Column>
                     </Grid>
                 </div>

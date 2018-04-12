@@ -34,6 +34,8 @@ export namespace AddWorklogProps {
         StartTime?: string;
         HoursWorked?: number;
         Description?: string;
+        //OPTIONAL input
+        activeIndex?: number;
     }
 }
 

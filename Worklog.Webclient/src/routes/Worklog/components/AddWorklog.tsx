@@ -2,7 +2,7 @@
 import { withRouter } from 'react-router-dom';
 import { AddWorklogProps } from '../containers/AddWorklogContainer';
 import { IWorklog } from '../../../models/Worklog';
-import { Divider, Form, Label, TextArea, Button, Modal } from 'semantic-ui-react';
+import { Divider, Form, Label, TextArea, Button, Modal, Accordion, Icon } from 'semantic-ui-react';
 import * as moment from 'moment';
 
 const initialState: AddWorklogProps.IState = {
@@ -13,9 +13,23 @@ const initialState: AddWorklogProps.IState = {
     DateCreated: new Date(Date.now()),
     StartTime: '',
     HoursWorked: 0,
-    Description: ''
+    Description: '',
+    activeIndex: 1
 };
 
+
+const todoPanel = [
+    {
+        title: 'Optional: Remaining Tasks',
+        content: {
+            as: Form.Input,
+            key: 'content',
+            label: 'Hello',
+            pointing: 'left',
+            placeholder: 'Date of expected completion'
+        },
+    },
+]
 
 class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps.IState> {
     //: AddWorklogProps.IProps
@@ -33,7 +47,8 @@ class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps
         this.dialogShow = this.dialogShow.bind(this);
         this.dialogClose = this.dialogClose.bind(this);
         this.errorDialogShow = this.errorDialogShow.bind(this);
-
+        //Accordian
+        this.handleOptional = this.handleOptional.bind(this);
     }
 
     handleSubjectChange(e: React.FormEvent<HTMLInputElement>) {
@@ -79,6 +94,14 @@ class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps
         this.setState({
             Description: e.currentTarget.value
         });
+    }
+
+    handleOptional(e, titleProps) {
+        const { index } = titleProps;
+        const { activeIndex } = this.state;
+        const newIndex = activeIndex === index ? -1 : index;
+
+        this.setState({ activeIndex: newIndex });
     }
 
     handleFormSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -130,11 +153,13 @@ class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps
     //END: Submission Dialog (success/failure)
 
     render() {
-        const { submitDialogOpen, errorDialogOpen, dialogSize } = this.state;
+        const { submitDialogOpen, errorDialogOpen, dialogSize, activeIndex } = this.state;
 
         return (
             <div style={{ textAlign: 'center' }}>
                 <h4>Add Worklog component</h4>
+
+                {/*START: Main component*/}
                 <Form onSubmit={this.handleFormSubmit}>
                     <Form.Field inline={true}>
                         <input type="text" placeholder="Subject" onChange={this.handleSubjectChange}  />
@@ -151,6 +176,7 @@ class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps
                         <Label pointing="left">Enter Date</Label>
                     </Form.Field>
 
+                    {/*Starting work time and # of hours worked input **/}
                     <Form.Field inline={true}>
                         <Form.Field inline={true}>
                             <Label pointing="right">Enter Starting Work Time</Label>
@@ -162,13 +188,38 @@ class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps
                         </Form.Field>
                     </Form.Field>
 
-                    <Form.Field inline={true} className="addlog-text-area">
-                        <TextArea placeholder="Description of Work Done" onChange={this.handleDescriptionChange}/>
-                        <Label pointing="above">Enter Description</Label>
+                    {/**Description input area*/}
+                    <Form.Field>
+                        <Label pointing="below">Enter Description</Label>
+                        <br/>
+                        <TextArea placeholder="Description of Work Done" onChange={this.handleDescriptionChange} style={{ resize: 'none', width: '20%'}}/>
                     </Form.Field>
+
+                    <Accordion>
+                        <Accordion.Title active={activeIndex === 0} index={0} onClick={this.handleOptional} style={{color: 'white'}}>
+                            <Icon name='dropdown'/>
+                            Optional: Remaining Tasks
+                        </Accordion.Title>
+                        <Accordion.Content active={activeIndex === 0}>
+                            {/*Due date input*/}
+                            <Form.Field inline={true}>
+                                <input type="date" placeholder="Expected Date of Completion" />
+                                <Label pointing="left">Due Date</Label>
+                            </Form.Field>
+
+                            {/**Task list input*/}
+                            <Form.Field>
+                                <Label pointing='below'>Tasks</Label>
+                                <br/>
+                                <TextArea placeholder="- List of remaining tasks" style={{ width: '15%', resize: 'none'}}/>
+                            </Form.Field>
+                        </Accordion.Content>
+                    </Accordion>
+
                     <Divider />
                     <Button secondary={true}>Submit</Button>
                 </Form>
+                {/*END: Main component*/}
 
                 {/*This is the dialog for the positive */}
                 <Modal size={dialogSize} open={submitDialogOpen} onClose={this.dialogClose} className='dialog-position'>

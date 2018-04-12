@@ -30,6 +30,8 @@ export namespace WorklogProps {
         modalTimestamp?: string;
         modalDate?: string;
         /**END: Cardview modal properties**/
+
+        week?: Array<string>;
     }
 }
 
