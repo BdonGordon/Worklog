@@ -15,7 +15,7 @@ const initialState: IState = {
     visible: false
 };
 
-class Header extends React.Component<ICoreLayoutProps, IState> {
+class NavDrawer extends React.Component<ICoreLayoutProps, IState> {
     constructor(props: ICoreLayoutProps) {
         super(props);
         this.state = initialState;
@@ -58,6 +58,6 @@ class Header extends React.Component<ICoreLayoutProps, IState> {
         );
     }
 }
-export default Header;
+export default NavDrawer;
 
 

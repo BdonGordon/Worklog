@@ -43,7 +43,7 @@
     <Content Include="src\config\config.json">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\core.css" />
+    <Content Include="src\core.scss" />
     <Content Include="src\index.css" />
     <Content Include="src\logo.svg" />
     <Content Include="src\store\createStore.ts" />

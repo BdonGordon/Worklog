@@ -1,5 +1,5 @@
 ﻿import * as React from 'react';
-import Header from '../components/Header';
+import NavDrawer from '../components/Header';
 import { connect } from 'react-redux';
 
 function mapStateToProps(state: any) {
@@ -15,5 +15,5 @@ function mapDispatchToProps(dispatch: any) {
 }
 
 
-export default Header; //connect<>()(Header)
+export default NavDrawer; //connect<>()(Header)
 //export default connect(mapStateToProps, mapDispatchToProps)(Header);

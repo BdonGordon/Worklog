@@ -1,10 +1,10 @@
 ﻿import * as React from 'react';
 import { BrowserRouter, Route, NavLink, Link  } from 'react-router-dom';
 import Routes from '../routes/index';
-//import Header from '../components/Header/containers/HeaderContainer';
+import NavDrawer from '../components/Header/containers/HeaderContainer';
 import { Sidebar, Segment, Button, Menu, Image, Icon, Header } from 'semantic-ui-react';
 import '../App.css';
-import '../core.css';
+import '../core.scss';
 
 export interface ICoreLayoutProps {
 }
