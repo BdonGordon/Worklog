@@ -41,6 +41,7 @@ class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps
         this.handleAddTask = this.handleAddTask.bind(this);
         this.renderTaskList = this.renderTaskList.bind(this);
         this.handleTaskTextChange = this.handleTaskTextChange.bind(this);
+        this.handleRemoveTask = this.handleRemoveTask.bind(this);
 
         this.testShow = this.testShow.bind(this);
     }
@@ -136,6 +137,20 @@ class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps
     }
 
     /**
+     * Removes the task from the list of tasks
+     * @param task
+     */
+    handleRemoveTask(task: ITask) {
+        let removedTask: ITask = task;
+        let oldList: Array<ITask> = this.state.Tasks;
+        let updatedTaskList: Array<ITask> = oldList.filter((oldTask: ITask) => oldTask.key !== removedTask.key);
+
+        this.setState({
+            Tasks: updatedTaskList
+        });
+    }
+
+    /**
      *  This renders the new Task Input field in the UI by returning a list of
      * input fields
      */
@@ -147,7 +162,7 @@ class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps
                 return (
                     <div key={task.key}>
                         <input type="text" placeholder="Task title" style={{ marginTop: '4px', marginBottom: '4px', width: '80%' }} onChange={(e) => this.handleTaskTextChange(task, e)} />
-                        <Label style={{ backgroundColor: '#a70000', marginLeft: '4px', marginTop: '2%'}}><Icon name='remove' /></Label>
+                        <Label style={{ backgroundColor: '#a70000', marginLeft: '4px', marginTop: '2%', cursor: 'pointer' }} onClick={(e) => this.handleRemoveTask(task)}> <Icon name='remove' /></Label>
                     </div>
                 );
             })
@@ -156,7 +171,6 @@ class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps
     }
 
     handleTaskTextChange(task: ITask, e: React.FormEvent<HTMLInputElement>) {
-        //console.log(e.currentTarget.value);
         let taskList = this.state.Tasks;
         taskList[taskList.indexOf(task)] = {
             key: task.key,
