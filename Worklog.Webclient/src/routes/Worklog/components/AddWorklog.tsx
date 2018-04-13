@@ -100,10 +100,10 @@ class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps
     handleAddTask() {
         let newTask: Array<any> = this.state.tasksInput;
         let newInput = (
-            <input type="text" placeholder="Task Title" />
+            <input type="text" placeholder="Task Title" style={{width: '90%'}}/>
         );
         let num: number;
-
+        //style={{width: '100%'}}
         newTask.push(newInput);
 
         this.setState({
@@ -118,7 +118,7 @@ class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps
 
         return (
             newTask.map((input, index) => {
-                return <List key={index}> {input} </List>;
+                return <List key={index}> {index} {input} </List>;
             })
         );
     }
@@ -230,7 +230,7 @@ class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps
                             <Form.Field>
                                 <Label pointing='below'>Tasks</Label>
                                 <br />
-                                <div>
+                                <div style={{ height: '100px', overflowY: 'scroll', width: '20%', position: 'relative', left: '40%', overflowX: 'hidden', overflow: 'auto' }}>
                                     {this.createNewTask()}
                                 </div>
                             </Form.Field>
