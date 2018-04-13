@@ -10,6 +10,12 @@ export interface IWorklog {
     Description?: string;
 }
 
+export interface ITask {
+    date?: Date;
+    key: number;
+    value: string;
+}
+
 export interface IWorklogState {
     readonly isFetching: boolean;
     readonly hasError: boolean;

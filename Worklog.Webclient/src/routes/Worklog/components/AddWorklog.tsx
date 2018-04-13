@@ -1,7 +1,7 @@
 ﻿import * as React from 'react';
 import { withRouter } from 'react-router-dom';
-import { AddWorklogProps, ITask } from '../containers/AddWorklogContainer';
-import { IWorklog } from '../../../models/Worklog';
+import { AddWorklogProps } from '../containers/AddWorklogContainer';
+import { IWorklog, ITask } from '../../../models/Worklog';
 import { Divider, Form, Label, TextArea, Button, Modal, Accordion, Icon, List, Segment } from 'semantic-ui-react';
 import * as moment from 'moment';
 
@@ -14,8 +14,9 @@ const initialState: AddWorklogProps.IState = {
     StartTime: '',
     HoursWorked: 0,
     Description: '',
+    DueDate: new Date(Date.now()),
     activeIndex: 0,
-    tasksInput: new Array(),
+    Tasks: new Array(),
 };
 
 class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps.IState> {
@@ -36,6 +37,7 @@ class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps
         this.errorDialogShow = this.errorDialogShow.bind(this);
         //Accordian
         this.handleOptionalVisibility = this.handleOptionalVisibility.bind(this);
+        this.handleDueDateChange = this.handleDueDateChange.bind(this);
         this.handleAddTask = this.handleAddTask.bind(this);
         this.renderTaskList = this.renderTaskList.bind(this);
         this.handleTaskTextChange = this.handleTaskTextChange.bind(this);
@@ -99,25 +101,37 @@ class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps
 
         this.setState({ activeIndex: newIndex });
     }
-    
+
+    /**START: OPTIONAL: REMAINING TASKS SECTION**/
+    /**
+     * 
+     * @param e
+     */
+    handleDueDateChange(e: React.FormEvent<HTMLInputElement>) {
+        let dueDate: Date = new Date(e.currentTarget.value);
+
+        this.setState({
+            DueDate: dueDate
+        });
+    }
 
     /**
-     * Adds a new Input field into the tasksInput state property so it can be accessed in function below
+     * Adds a new Input field into the Tasks state property so it can be accessed in function below
      */
     handleAddTask() {
         let newTask: ITask;
         let num: number;
-        num = this.state.tasksInput.length + 1;
+        num = this.state.Tasks.length + 1;
         newTask = {
             key: num,
             value: ''
         };
 
-        let taskList = this.state.tasksInput;
+        let taskList = this.state.Tasks;
         taskList.push(newTask);
 
         this.setState({
-            tasksInput: taskList
+            Tasks: taskList
         });
     }
 
@@ -126,11 +140,16 @@ class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps
      * input fields
      */
     renderTaskList() {
-        let tasks = this.state.tasksInput;
+        let tasks = this.state.Tasks;
 
         return (
             tasks.map((task: ITask) => {
-                return <input key={task.key} type="text" placeholder="Task title" style={{ marginTop: '4px', marginBottom: '4px' }} onChange={(e) => this.handleTaskTextChange(task, e)} />
+                return (
+                    <div key={task.key}>
+                        <input type="text" placeholder="Task title" style={{ marginTop: '4px', marginBottom: '4px', width: '80%' }} onChange={(e) => this.handleTaskTextChange(task, e)} />
+                        <Label style={{ backgroundColor: '#a70000', marginLeft: '4px', marginTop: '2%'}}><Icon name='remove' /></Label>
+                    </div>
+                );
             })
         );
         //<List key={index}> {index} {input} </List>;
@@ -138,21 +157,29 @@ class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps
 
     handleTaskTextChange(task: ITask, e: React.FormEvent<HTMLInputElement>) {
         //console.log(e.currentTarget.value);
-        let taskList = this.state.tasksInput;
+        let taskList = this.state.Tasks;
         taskList[taskList.indexOf(task)] = {
             key: task.key,
             value: e.currentTarget.value
         };
         this.setState({
-            tasksInput: taskList
+            Tasks: taskList
         });
     }
 
+    //Everything here will be put into handleFormSubmit once correctly done.
     testShow() {
-        for (let i = 0; i < this.state.tasksInput.length; i++) {
-            console.log('TASK ITEM:' + this.state.tasksInput[i].value);
-        }
+        let taskObject = {
+            duedate: this.state.DueDate,
+            tasks: this.state.Tasks.map((task) => {
+                return task.value;
+            }),
+        };
+
+        let taskJson = JSON.stringify(taskObject);
+        console.log(taskJson);
     }
+    /**END: OPTIONAL: REMAINING TASKS SECTION**/
 
     handleFormSubmit(e: React.FormEvent<HTMLFormElement>) {
         let form: HTMLFormElement = e.currentTarget;
@@ -253,7 +280,7 @@ class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps
                             
                             {/*Due date input*/}
                             <Form.Field inline={true}>
-                                <input type="date" placeholder="Expected Date of Completion" />
+                                <input type="date" placeholder="Expected Date of Completion" onChange={this.handleDueDateChange} />
                                 <Label pointing="left">Due Date</Label>
                             </Form.Field>
 
