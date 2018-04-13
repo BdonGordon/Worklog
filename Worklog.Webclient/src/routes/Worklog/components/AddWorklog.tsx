@@ -14,9 +14,10 @@ const initialState: AddWorklogProps.IState = {
     StartTime: '',
     HoursWorked: 0,
     Description: '',
+    Tasks: '',
     DueDate: new Date(Date.now()),
     activeIndex: 0,
-    Tasks: new Array(),
+    TaskList: new Array(),
 };
 
 class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps.IState> {
@@ -122,17 +123,17 @@ class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps
     handleAddTask() {
         let newTask: ITask;
         let num: number;
-        num = this.state.Tasks.length + 1;
+        num = this.state.TaskList.length + 1;
         newTask = {
             key: num,
             value: ''
         };
 
-        let taskList = this.state.Tasks;
+        let taskList = this.state.TaskList;
         taskList.push(newTask);
 
         this.setState({
-            Tasks: taskList
+            TaskList: taskList
         });
     }
 
@@ -142,11 +143,11 @@ class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps
      */
     handleRemoveTask(task: ITask) {
         let removedTask: ITask = task;
-        let oldList: Array<ITask> = this.state.Tasks;
+        let oldList: Array<ITask> = this.state.TaskList;
         let updatedTaskList: Array<ITask> = oldList.filter((oldTask: ITask) => oldTask.key !== removedTask.key);
 
         this.setState({
-            Tasks: updatedTaskList
+            TaskList: updatedTaskList
         });
     }
 
@@ -155,7 +156,7 @@ class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps
      * input fields
      */
     renderTaskList() {
-        let tasks = this.state.Tasks;
+        let tasks = this.state.TaskList;
 
         return (
             tasks.map((task: ITask) => {
@@ -171,13 +172,13 @@ class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps
     }
 
     handleTaskTextChange(task: ITask, e: React.FormEvent<HTMLInputElement>) {
-        let taskList = this.state.Tasks;
+        let taskList = this.state.TaskList;
         taskList[taskList.indexOf(task)] = {
             key: task.key,
             value: e.currentTarget.value
         };
         this.setState({
-            Tasks: taskList
+            TaskList: taskList
         });
     }
 
@@ -185,7 +186,7 @@ class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps
     testShow() {
         let taskObject = {
             duedate: this.state.DueDate,
-            tasks: this.state.Tasks.map((task) => {
+            tasks: this.state.TaskList.map((task) => {
                 return task.value;
             }),
         };
@@ -197,13 +198,23 @@ class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps
 
     handleFormSubmit(e: React.FormEvent<HTMLFormElement>) {
         let form: HTMLFormElement = e.currentTarget;
+
+        let taskObject = {
+            duedate: this.state.DueDate,
+            tasks: this.state.TaskList.map((task) => {
+                return task.value;
+            }),
+        };
+        let taskJson = JSON.stringify(taskObject);
+
         let worklog: IWorklog = {
             Subject: this.state.Subject,
             Author: this.state.Author,
             DateCreated: this.state.DateCreated,
             StartTime: this.state.StartTime,
             HoursWorked: this.state.HoursWorked,
-            Description: this.state.Description
+            Description: this.state.Description,
+            Tasks: taskJson
         };
         this.props.addWorklog(worklog).then((result) => {
             if (result.error) {

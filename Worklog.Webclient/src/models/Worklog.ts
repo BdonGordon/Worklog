@@ -8,6 +8,7 @@ export interface IWorklog {
     StartTime?: string;
     HoursWorked?: number;
     Description?: string;
+    Tasks?: string;
 }
 
 export interface ITask {

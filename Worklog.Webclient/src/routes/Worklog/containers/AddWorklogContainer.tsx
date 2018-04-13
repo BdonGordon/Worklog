@@ -34,10 +34,11 @@ export namespace AddWorklogProps {
         StartTime?: string;
         HoursWorked?: number;
         Description?: string;
+        Tasks?: string;
         //OPTIONAL input
         DueDate?: Date;
         activeIndex?: number;
-        Tasks?: Array<ITask>;
+        TaskList?: Array<ITask>;
     }
 }
 
