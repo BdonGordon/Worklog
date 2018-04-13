@@ -4,6 +4,11 @@ import { connect } from 'react-redux';
 import { addWorklog } from '../../../modules/worklog';
 import { IWorklog, WorklogsAction, WorklogAction } from '../../../models/Worklog';
 
+export interface ITask {
+    key: number;
+    value: string;
+}
+
 export namespace AddWorklogProps {
     export interface IStateProps {
         //worklog: IWorklog | null;

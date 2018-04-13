@@ -7,35 +7,8 @@
   height: 80px;
 }
 
-.App-header {
-  background-color: #222;
-  margin-top: 150px;
-  padding-top: 200px;
-  color: white;
-}
-
-.App-title {
-  font-size: 1.5em;
-}
-
-.App-intro {
-  font-size: large;
-}
-
-.nav-bar-div {
-    height: 100%;
-    width: 5%;
-    position: absolute;
-}
-
-.menu-bar-details {
-    min-height: 7vh;
-    height: 7vh;
-    background-color: #222222;
-}
-
 .addlog-main-div {
-    background-color: #41474d;
+    background-color: #3c3c3d;
     height: 100vh;
 }
 
@@ -66,4 +39,9 @@
     padding-left: 12px;
     border: none;
     padding-top: 8px;
+}
+
+.tasks-input-box {
+    margin-bottom: 4px;
+    margin-top: 4px;
 }

@@ -1,6 +1,6 @@
 ﻿import * as React from 'react';
 import { withRouter } from 'react-router-dom';
-import { AddWorklogProps } from '../containers/AddWorklogContainer';
+import { AddWorklogProps, ITask } from '../containers/AddWorklogContainer';
 import { IWorklog } from '../../../models/Worklog';
 import { Divider, Form, Label, TextArea, Button, Modal, Accordion, Icon, List, Segment } from 'semantic-ui-react';
 import * as moment from 'moment';
@@ -15,7 +15,7 @@ const initialState: AddWorklogProps.IState = {
     HoursWorked: 0,
     Description: '',
     activeIndex: 0,
-    tasksInput: new Array()
+    tasksInput: new Array(),
 };
 
 class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps.IState> {
@@ -37,7 +37,10 @@ class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps
         //Accordian
         this.handleOptionalVisibility = this.handleOptionalVisibility.bind(this);
         this.handleAddTask = this.handleAddTask.bind(this);
-        this.createNewTask = this.createNewTask.bind(this);
+        this.renderTaskList = this.renderTaskList.bind(this);
+        this.handleTaskTextChange = this.handleTaskTextChange.bind(this);
+
+        this.testShow = this.testShow.bind(this);
     }
 
     handleSubjectChange(e: React.FormEvent<HTMLInputElement>) {
@@ -96,31 +99,59 @@ class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps
 
         this.setState({ activeIndex: newIndex });
     }
+    
 
+    /**
+     * Adds a new Input field into the tasksInput state property so it can be accessed in function below
+     */
     handleAddTask() {
-        let newTask: Array<any> = this.state.tasksInput;
-        let newInput = (
-            <input type="text" placeholder="Task Title" style={{width: '90%'}}/>
-        );
+        let newTask: ITask;
         let num: number;
-        //style={{width: '100%'}}
-        newTask.push(newInput);
+        num = this.state.tasksInput.length + 1;
+        newTask = {
+            key: num,
+            value: ''
+        };
+
+        let taskList = this.state.tasksInput;
+        taskList.push(newTask);
 
         this.setState({
-            tasksInput: newTask
+            tasksInput: taskList
         });
-
-        console.log(this.state.tasksInput.length);
     }
 
-    createNewTask() {
-        let newTask = this.state.tasksInput;
+    /**
+     *  This renders the new Task Input field in the UI by returning a list of
+     * input fields
+     */
+    renderTaskList() {
+        let tasks = this.state.tasksInput;
 
         return (
-            newTask.map((input, index) => {
-                return <List key={index}> {index} {input} </List>;
+            tasks.map((task: ITask) => {
+                return <input key={task.key} type="text" placeholder="Task title" style={{ marginTop: '4px', marginBottom: '4px' }} onChange={(e) => this.handleTaskTextChange(task, e)} />
             })
         );
+        //<List key={index}> {index} {input} </List>;
+    }
+
+    handleTaskTextChange(task: ITask, e: React.FormEvent<HTMLInputElement>) {
+        //console.log(e.currentTarget.value);
+        let taskList = this.state.tasksInput;
+        taskList[taskList.indexOf(task)] = {
+            key: task.key,
+            value: e.currentTarget.value
+        };
+        this.setState({
+            tasksInput: taskList
+        });
+    }
+
+    testShow() {
+        for (let i = 0; i < this.state.tasksInput.length; i++) {
+            console.log('TASK ITEM:' + this.state.tasksInput[i].value);
+        }
     }
 
     handleFormSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -231,13 +262,14 @@ class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps
                                 <Label pointing='below'>Tasks</Label>
                                 <br />
                                 <div style={{ height: '100px', overflowY: 'scroll', width: '20%', position: 'relative', left: '40%', overflowX: 'hidden', overflow: 'auto' }}>
-                                    {this.createNewTask()}
+                                    {this.renderTaskList()}
                                 </div>
                             </Form.Field>
                             <Label onClick={this.handleAddTask} style={{ cursor: ' pointer', backgroundColor: '#777777' }}>
                                 <Icon name='plus' color='green' />
                                 Add Task
                             </Label>
+                            <Label onClick={this.testShow}>Show</Label>
                         </Accordion.Content>
                     </Accordion>
                     <Divider />
