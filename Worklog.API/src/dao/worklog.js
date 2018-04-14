@@ -14,7 +14,8 @@ function addWorklog(worklog) {
         DateCreated: worklog.DateCreated,
         StartTime: worklog.StartTime,
         HoursWorked: worklog.HoursWorked,
-        Description: worklog.Description
+        Description: worklog.Description,
+        Tasks: worklog.Tasks
     }).then((log) => {
         return index_1.worklogDB.Worklog.findOne({
             where: {

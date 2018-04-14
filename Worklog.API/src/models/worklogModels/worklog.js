@@ -39,6 +39,11 @@ function defineWorklog(sequelize, dataTypes) {
             type: Sequelize.STRING,
             field: 'Description',
             allowNull: true
+        },
+        Tasks: {
+            type: Sequelize.STRING,
+            field: 'Tasks',
+            allowNull: true
         }
     }, {
         tableName: 'tbworklogs',

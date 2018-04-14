@@ -9,6 +9,7 @@ export interface IWorklogAttributes {
     StartTime?: string;
     HoursWorked?: number;
     Description?: string;
+    Tasks?: string;
 }
 
 export interface IWorklogInstance extends IWorklogAttributes, Sequelize.Instance<IWorklogAttributes> { }
@@ -51,6 +52,11 @@ export default function defineWorklog(sequelize: Sequelize.Sequelize, dataTypes:
         Description: {
             type: Sequelize.STRING,
             field: 'Description',
+            allowNull: true
+        },
+        Tasks: {
+            type: Sequelize.STRING,
+            field: 'Tasks',
             allowNull: true
         }
     }, {

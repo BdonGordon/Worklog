@@ -35,6 +35,7 @@ export namespace AddWorklogProps {
         HoursWorked?: number;
         Description?: string;
         Tasks?: string;
+        
         //OPTIONAL input
         DueDate?: Date;
         activeIndex?: number;

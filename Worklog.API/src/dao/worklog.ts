@@ -29,7 +29,8 @@ export function addWorklog(worklog: IWorklogAttributes): Promise<IWorklogAttribu
         DateCreated: worklog.DateCreated,
         StartTime: worklog.StartTime,
         HoursWorked: worklog.HoursWorked,
-        Description: worklog.Description
+        Description: worklog.Description,
+        Tasks: worklog.Tasks
     }).then((log: IWorklogAttributes) => {
         return worklogDB.Worklog.findOne({
             where: {
