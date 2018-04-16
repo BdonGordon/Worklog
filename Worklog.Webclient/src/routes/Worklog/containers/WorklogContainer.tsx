@@ -1,7 +1,7 @@
 ﻿import * as React from 'react';
 import Worklog from '../components/Worklog';
-import { connect } from 'react-redux'; 
-import { IWorklog, WorklogsAction, WorklogAction } from '../../../models/Worklog';
+import { connect } from 'react-redux';
+import { IWorklog, WorklogsAction, WorklogAction, ITask } from '../../../models/Worklog';
 import { getWorklogs } from '../../../modules/worklog';
 
 export namespace WorklogProps {
@@ -30,6 +30,13 @@ export namespace WorklogProps {
         modalTimestamp?: string;
         modalDate?: string;
         /**END: Cardview modal properties**/
+
+        /**START: Worklog OPTIONAL Due date and task properties**/
+        dueDate?: Date;
+        tasks?: Array<string>;
+        activeIndex?: number;
+        taskObject?: Array<ITask>;
+        /**END: Worklog OPTIONAL Due date and task properties**/
 
         week?: Array<string>;
     }

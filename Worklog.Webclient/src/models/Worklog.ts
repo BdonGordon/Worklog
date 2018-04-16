@@ -12,7 +12,7 @@ export interface IWorklog {
 }
 
 export interface ITask {
-    date?: Date;
+    date?: string;
     key: number;
     value: string;
 }

@@ -2,7 +2,8 @@
 import { withRouter } from 'react-router-dom';
 import { Button, Header, Image, Modal, List, Icon, Grid, Divider, Accordion } from 'semantic-ui-react';
 import { WorklogProps } from '../containers/WorklogContainer';
-import { IWorklog } from '../../../models/Worklog';
+import { IWorklog, ITask } from '../../../models/Worklog';
+import _ from 'lodash';
 
 const initialState: WorklogProps.IState = {
     isSelected: false,
@@ -11,7 +12,11 @@ const initialState: WorklogProps.IState = {
     modalDescription: '',
     modalTimestamp: '',
     modalDate: '',
-    week: new Array()
+    activeIndex: -1,
+    dueDate: new Date(),
+    tasks: new Array(),
+    week: new Array(),
+    taskObject: new Array()
 };
 
 class Worklog extends React.Component<WorklogProps.IProps, WorklogProps.IState> {
@@ -21,15 +26,26 @@ class Worklog extends React.Component<WorklogProps.IProps, WorklogProps.IState> 
         this.state = initialState;
 
         this.renderWorklogList = this.renderWorklogList.bind(this);
-        this.renderWeekList = this.renderWeekList.bind(this);
         this.handleLogClick = this.handleLogClick.bind(this);
         this.modalClose = this.modalClose.bind(this);
+
+        //Tasks functions 
+        this.renderWeekList = this.renderWeekList.bind(this);
+        this.createTasks = this.createTasks.bind(this);
+        this.matchDate = this.matchDate.bind(this);
+        this.dailyTasksContent = this.dailyTasksContent.bind(this);
+    }
+
+    componentWillMount() {
+        this.props.getWorklogs();
     }
 
     //componentMount() => initializeWorklogs() {this.props.getWorklogs}
     componentDidMount() {
-        this.props.getWorklogs();
         this.createWeekList();
+    }
+
+    componentWillUnmount() {
     }
 
     /**
@@ -39,9 +55,6 @@ class Worklog extends React.Component<WorklogProps.IProps, WorklogProps.IState> 
     handleLogClick(worklog: IWorklog) {
         let date: Date = new Date(worklog.DateCreated);
         let dateString = date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
-        //let dateString = date.toUTCString().substr(date.toUTCString.length - 12, date.toUTCString.length);
-
-        //console.log(dateString);
 
         this.setState({
             isSelected: true,
@@ -79,7 +92,43 @@ class Worklog extends React.Component<WorklogProps.IProps, WorklogProps.IState> 
             //return <p>Hello</p>;
         }
 
-        return <p>Bye</p>;
+        return <p>Empty worklog</p>;
+    }
+
+
+    /**START: This is for the TASKS section (right side of the component)**/
+
+    /**
+     * This creates the  
+     */
+    createTasks(): Array<string> {
+        let taskList: Array<string> = new Array();
+
+        if (this.props.worklogList.length > 0) {
+            this.props.worklogList.map((worklog) => {
+                if (worklog.Tasks !== null) {
+                    let task = worklog.Tasks;
+                    let parseTask = JSON.parse(task, function (key, value) {
+                        if (key === "duedate") {
+                            let dateString: string = new Date(value).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+
+                            return dateString;
+                        }
+                        else {
+                            return value;
+                        }
+                    });
+                    taskList.push(parseTask);
+
+                    /*this.setState({
+                        tasks: taskList
+                    });*/
+                    //console.log(taskList);
+                }
+            });
+        }
+
+        return taskList;
     }
 
     /**
@@ -102,17 +151,59 @@ class Worklog extends React.Component<WorklogProps.IProps, WorklogProps.IState> 
         });
     }
 
+    matchDate(element, array: Array<any>) {
+        
+    }
+
+    dailyTasksContent() {
+        let tasks = this.createTasks();
+        let tasksArray: Array<ITask> = this.state.taskObject;
+        let iTask: ITask;
+
+        tasks.map((taskObject, index) => {
+            //taskObject looks like this: {duedate: "April 25, 2018", tasks: Array(1)}. We access the "keys" of taskObject through the way below
+            let dateKey = "duedate";
+            let tasksKey = "tasks";
+            let taskDueDate: string = taskObject[dateKey]; //this is how we access the string of the JSON parsed value
+            let tasksByDate: Array<string> = taskObject[tasksKey];
+            //console.log(taskDueDate);
+            tasksByDate.map((task) => {
+                //console.log(task);
+                iTask = {
+                    date: taskDueDate,
+                    key: index,
+                    value: task
+                };
+                tasksArray.push(iTask);
+            });
+        });
+
+        return tasksArray;
+    }
+
     /**
      * Display the list in the component
      */
     renderWeekList() {
-        return (this.state.week.map((day) => {
-            return <li key={day}>{day}</li>;
+
+        let tasks: Array<ITask> = this.dailyTasksContent();
+        return (this.state.week.map((day, index) => {
+            let test: Array<string> = this.state.week;
+            const panels = _.times(1, () => ({
+                title: day,
+                content: tasks.filter
+            }));
+            return (
+                <Accordion key={index} panels={panels} exclusive={false} />
+            );
         }));
-        
     }
 
+    /**END: This is for the TASKS section (right side of the component)**/
+
     render() {
+        const { activeIndex } = this.state;
+
         return (
             <div>
                 {/*Main component layout*/}
@@ -129,9 +220,7 @@ class Worklog extends React.Component<WorklogProps.IProps, WorklogProps.IState> 
                         </Grid.Column>
                         <Grid.Column>
                             <h2>Tasks to Complete</h2>
-                            <ul>
-                                {this.renderWeekList()}
-                            </ul>
+                            {this.renderWeekList()}
                         </Grid.Column>
                     </Grid>
                 </div>
