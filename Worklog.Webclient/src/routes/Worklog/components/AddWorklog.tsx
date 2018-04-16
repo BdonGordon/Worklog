@@ -16,7 +16,7 @@ const initialState: AddWorklogProps.IState = {
     Description: '',
     Tasks: '',
     DueDate: new Date(Date.now()),
-    activeIndex: 0,
+    activeIndex: -1,
     TaskList: new Array(),
 };
 
@@ -44,7 +44,7 @@ class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps
         this.handleTaskTextChange = this.handleTaskTextChange.bind(this);
         this.handleRemoveTask = this.handleRemoveTask.bind(this);
 
-        this.testShow = this.testShow.bind(this);
+        //this.testShow = this.testShow.bind(this);
     }
 
     handleSubjectChange(e: React.FormEvent<HTMLInputElement>) {
@@ -183,7 +183,7 @@ class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps
     }
 
     //Everything here will be put into handleFormSubmit once correctly done.
-    testShow() {
+    /*testShow() {
         let taskObject = {
             duedate: this.state.DueDate,
             tasks: this.state.TaskList.map((task) => {
@@ -193,7 +193,7 @@ class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps
 
         let taskJson = JSON.stringify(taskObject);
         console.log(taskJson);
-    }
+    }*/
     /**END: OPTIONAL: REMAINING TASKS SECTION**/
 
     handleFormSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -321,7 +321,7 @@ class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps
                                 <Icon name='plus' color='green' />
                                 Add Task
                             </Label>
-                            <Label onClick={this.testShow}>Show</Label>
+                            {/*<Label onClick={this.testShow}>Show</Label>*/}
                         </Accordion.Content>
                     </Accordion>
                     <Divider />
