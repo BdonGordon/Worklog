@@ -34,7 +34,6 @@ export namespace WorklogProps {
         /**START: Worklog OPTIONAL Due date and task properties**/
         selectedDate?: string;
         activeIndex?: number;
-        tasksArray?: Array<string>;
         /**END: Worklog OPTIONAL Due date and task properties**/
         week?: Array<string>;
     }

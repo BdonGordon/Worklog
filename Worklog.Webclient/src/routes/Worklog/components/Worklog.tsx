@@ -15,7 +15,6 @@ const initialState: WorklogProps.IState = {
     selectedDate: '',
     week: new Array(),
     activeIndex: -1,
-    tasksArray: new Array()
 };
 
 class Worklog extends React.Component<WorklogProps.IProps, WorklogProps.IState> {
@@ -27,7 +26,6 @@ class Worklog extends React.Component<WorklogProps.IProps, WorklogProps.IState> 
         this.renderWorklogList = this.renderWorklogList.bind(this);
         this.handleLogClick = this.handleLogClick.bind(this);
         this.modalClose = this.modalClose.bind(this);
-
         //Tasks functions 
         this.renderWeekList = this.renderWeekList.bind(this);
         this.toggleTaskDate = this.toggleTaskDate.bind(this);
@@ -39,12 +37,8 @@ class Worklog extends React.Component<WorklogProps.IProps, WorklogProps.IState> 
         this.props.getWorklogs();
     }
 
-    //componentMount() => initializeWorklogs() {this.props.getWorklogs}
     componentDidMount() {
         this.createWeekList();
-    }
-
-    componentWillUnmount() {
     }
 
     /**
@@ -66,7 +60,7 @@ class Worklog extends React.Component<WorklogProps.IProps, WorklogProps.IState> 
     }
 
     /**
-     * Simply closes the Modal 
+     * Simply closes the Worklog Modal 
      */
     modalClose() {
         this.setState({
@@ -74,6 +68,9 @@ class Worklog extends React.Component<WorklogProps.IProps, WorklogProps.IState> 
         });
     }
 
+    /**
+     * Retrieves the worklogs from the database and renders it on the left of the component
+     */
     renderWorklogList() {
         if (this.props.worklogList.length > 0) {
             return this.props.worklogList.map((worklog) => {
@@ -88,7 +85,6 @@ class Worklog extends React.Component<WorklogProps.IProps, WorklogProps.IState> 
                     </List>
                 );
             });
-            //return <p>Hello</p>;
         }
 
         return <p>Empty worklog</p>;
@@ -96,10 +92,8 @@ class Worklog extends React.Component<WorklogProps.IProps, WorklogProps.IState> 
 
 
     /**START: This is for the TASKS section (right side of the component)**/
-
-
     /**
-     * Create the list of the next 7 days
+     * Create the list of the next 7 days for the list to the right of the component
      */
     createWeekList() {
         let date: Date = new Date(Date.now());
@@ -119,6 +113,7 @@ class Worklog extends React.Component<WorklogProps.IProps, WorklogProps.IState> 
     }
 
     /**
+     * When a date is selected, the accordian for that one is opened
      * TODO: Make it open multiple panels at once
      * @param e
      * @param addedIndex
@@ -133,12 +128,16 @@ class Worklog extends React.Component<WorklogProps.IProps, WorklogProps.IState> 
             activeIndex: newIndex,
             selectedDate: titleProps.children[1]
         });
-        //this.matchDate(titleProps.children[1]); //gives the date (ie. "April 17, 2018")
     }
 
+    /**
+     * This is where the "magic" happens. This provides the LIST OF TASKS according to the selected date
+     * that is then passed into the method renderWeekList() 
+     */
     matchDate() {
         let chosenDate: string = this.state.selectedDate;
 
+        //TOOK TIME HERE because I forgot to include the "return" of the entire mapping... REMEMBER THE RETURN FUNCTION
         return (this.props.worklogList.map((worklog) => {
             if (worklog.Tasks !== null) {
                 let dateKey: string = 'duedate';
@@ -164,14 +163,15 @@ class Worklog extends React.Component<WorklogProps.IProps, WorklogProps.IState> 
     }
     
     /**
-     * Display the list in the component
+     * Firstly, this method is called for the RIGHT side of the component to render the dates from TODAY up until the next 7 days
+     * Each of these dates are rendered as Accordians which will have the contain of the tasks that pertain to that particular date
      */
     renderWeekList() {
         return (this.state.week.map((day, index) => {
             return (
                 <Accordion key={index} exclusive={false}>
                     <Accordion.Title style={{ color: 'white' }} index={index} active={this.state.activeIndex === index} onClick={this.toggleTaskDate}>
-                        <Icon name='dropdown'/>
+                        <Icon name='dropdown' />
                         {day}
                     </Accordion.Title>
                     <Accordion.Content active={this.state.activeIndex === index}>
