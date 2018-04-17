@@ -12,11 +12,10 @@ const initialState: WorklogProps.IState = {
     modalDescription: '',
     modalTimestamp: '',
     modalDate: '',
-    activeIndex: -1,
-    dueDate: new Date(),
-    tasks: new Array(),
+    selectedDate: '',
     week: new Array(),
-    taskObject: new Array()
+    activeIndex: -1,
+    tasksArray: new Array()
 };
 
 class Worklog extends React.Component<WorklogProps.IProps, WorklogProps.IState> {
@@ -31,9 +30,9 @@ class Worklog extends React.Component<WorklogProps.IProps, WorklogProps.IState> 
 
         //Tasks functions 
         this.renderWeekList = this.renderWeekList.bind(this);
-        this.createTasks = this.createTasks.bind(this);
+        this.toggleTaskDate = this.toggleTaskDate.bind(this);
         this.matchDate = this.matchDate.bind(this);
-        this.dailyTasksContent = this.dailyTasksContent.bind(this);
+
     }
 
     componentWillMount() {
@@ -98,38 +97,6 @@ class Worklog extends React.Component<WorklogProps.IProps, WorklogProps.IState> 
 
     /**START: This is for the TASKS section (right side of the component)**/
 
-    /**
-     * This creates the  
-     */
-    createTasks(): Array<string> {
-        let taskList: Array<string> = new Array();
-
-        if (this.props.worklogList.length > 0) {
-            this.props.worklogList.map((worklog) => {
-                if (worklog.Tasks !== null) {
-                    let task = worklog.Tasks;
-                    let parseTask = JSON.parse(task, function (key, value) {
-                        if (key === "duedate") {
-                            let dateString: string = new Date(value).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
-
-                            return dateString;
-                        }
-                        else {
-                            return value;
-                        }
-                    });
-                    taskList.push(parseTask);
-
-                    /*this.setState({
-                        tasks: taskList
-                    });*/
-                    //console.log(taskList);
-                }
-            });
-        }
-
-        return taskList;
-    }
 
     /**
      * Create the list of the next 7 days
@@ -143,7 +110,7 @@ class Worklog extends React.Component<WorklogProps.IProps, WorklogProps.IState> 
 
         for (index = 0; index < 7; index++){
             nextDay.setDate(date.getDate() + index);
-            dateString = nextDay.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+            dateString = nextDay.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
             week.push(dateString);
         }
         this.setState({
@@ -151,50 +118,68 @@ class Worklog extends React.Component<WorklogProps.IProps, WorklogProps.IState> 
         });
     }
 
-    matchDate(element, array: Array<any>) {
+    /**
+     * TODO: Make it open multiple panels at once
+     * @param e
+     * @param addedIndex
+     */
+    toggleTaskDate(e, titleProps) {
+        const { index } = titleProps;
+        const { activeIndex } = this.state;
+        //if the activeIndex === index ? -1 (if you click the active index) : (OR) you click a NEW index
+        const newIndex: number = activeIndex === index ? -1 : index;
+            
+        this.setState({
+            activeIndex: newIndex,
+            selectedDate: titleProps.children[1]
+        });
+        //this.matchDate(titleProps.children[1]); //gives the date (ie. "April 17, 2018")
+    }
+
+    matchDate() {
+        let chosenDate: string = this.state.selectedDate;
+
+        return (this.props.worklogList.map((worklog) => {
+            if (worklog.Tasks !== null) {
+                let dateKey: string = 'duedate';
+                let taskJson: string = JSON.parse(worklog.Tasks);
+                let date: string = taskJson[dateKey];
+                let matchingDate = new Date(date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+
+                if (chosenDate === matchingDate) {
+                    let taskKey = "tasks";
+                    let tasks: Array<string> = taskJson[taskKey];
+
+                    return (
+                        tasks.map((task, index) => {
+                            return <List key={index} style={{ color: 'white' }}>{task}</List>;
+                        })
+                    );
+                }
+            }
+            return null;
+        })
+        );
         
     }
-
-    dailyTasksContent() {
-        let tasks = this.createTasks();
-        let tasksArray: Array<ITask> = this.state.taskObject;
-        let iTask: ITask;
-
-        tasks.map((taskObject, index) => {
-            //taskObject looks like this: {duedate: "April 25, 2018", tasks: Array(1)}. We access the "keys" of taskObject through the way below
-            let dateKey = "duedate";
-            let tasksKey = "tasks";
-            let taskDueDate: string = taskObject[dateKey]; //this is how we access the string of the JSON parsed value
-            let tasksByDate: Array<string> = taskObject[tasksKey];
-            //console.log(taskDueDate);
-            tasksByDate.map((task) => {
-                //console.log(task);
-                iTask = {
-                    date: taskDueDate,
-                    key: index,
-                    value: task
-                };
-                tasksArray.push(iTask);
-            });
-        });
-
-        return tasksArray;
-    }
-
+    
     /**
      * Display the list in the component
      */
     renderWeekList() {
-
-        let tasks: Array<ITask> = this.dailyTasksContent();
         return (this.state.week.map((day, index) => {
-            let test: Array<string> = this.state.week;
-            const panels = _.times(1, () => ({
-                title: day,
-                content: tasks.filter
-            }));
             return (
-                <Accordion key={index} panels={panels} exclusive={false} />
+                <Accordion key={index} exclusive={false}>
+                    <Accordion.Title style={{ color: 'white' }} index={index} active={this.state.activeIndex === index} onClick={this.toggleTaskDate}>
+                        <Icon name='dropdown'/>
+                        {day}
+                    </Accordion.Title>
+                    <Accordion.Content active={this.state.activeIndex === index}>
+                        <ul>
+                            {this.matchDate()}
+                        </ul>
+                    </Accordion.Content>
+                </Accordion>
             );
         }));
     }

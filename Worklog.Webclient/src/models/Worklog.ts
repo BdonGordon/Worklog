@@ -14,7 +14,8 @@ export interface IWorklog {
 export interface ITask {
     date?: string;
     key: number;
-    value: string;
+    value?: string; //value is basically tasks. 
+    tasks?: Array<string>;
 }
 
 export interface IWorklogState {

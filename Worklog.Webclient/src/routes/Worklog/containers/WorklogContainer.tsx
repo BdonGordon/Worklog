@@ -32,12 +32,10 @@ export namespace WorklogProps {
         /**END: Cardview modal properties**/
 
         /**START: Worklog OPTIONAL Due date and task properties**/
-        dueDate?: Date;
-        tasks?: Array<string>;
+        selectedDate?: string;
         activeIndex?: number;
-        taskObject?: Array<ITask>;
+        tasksArray?: Array<string>;
         /**END: Worklog OPTIONAL Due date and task properties**/
-
         week?: Array<string>;
     }
 }
