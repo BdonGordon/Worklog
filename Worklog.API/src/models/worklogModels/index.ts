@@ -24,13 +24,14 @@ export const sequelize: Sequelize.Sequelize = new Sequelize(
     dbConfig.password,
     dbConfig
 );
-//don't know where 'module' came from lol
+//name of the file that we are in
 const basename: string = path.basename(module.filename);
 
-//A whole lot of unknowningness is occurring here lol
 fs.readdirSync(__dirname).filter((file: string): boolean => {
+    //return array of files except index (from /worklogModels - current directory .js to get the compiled js files from the .ts) 
     return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
 }).forEach((file: string) => {
+    //caching all of the database schema to perform CRUD actions ; imporrt; avoids from having to continuously retrieve the data every time there is a GET or POST method
     const model: any = sequelize.import(path.join(__dirname, file));
     worklogDB[model.name] = model;
     });

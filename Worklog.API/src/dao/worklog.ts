@@ -8,13 +8,6 @@ export function getWorklogs(): Promise<Array<IWorklogAttributes>> {
     return worklogDB.Worklog.findAll();
 }
 
-/*
-include: [{
-            model: worklogDB.Worklog
-        }]
-*/
-
-
 /**
  * "Creates the given worklog, then returns the newly created worklog"
  * @param worklog

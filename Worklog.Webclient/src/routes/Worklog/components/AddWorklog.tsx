@@ -182,20 +182,6 @@ class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps
         });
     }
 
-    //Everything here will be put into handleFormSubmit once correctly done.
-    /*testShow() {
-        let taskObject = {
-            duedate: this.state.DueDate,
-            tasks: this.state.TaskList.map((task) => {
-                return task.value;
-            }),
-        };
-
-        let taskJson = JSON.stringify(taskObject);
-        console.log(taskJson);
-    }*/
-    /**END: OPTIONAL: REMAINING TASKS SECTION**/
-
     handleFormSubmit(e: React.FormEvent<HTMLFormElement>) {
         let form: HTMLFormElement = e.currentTarget;
 
@@ -227,6 +213,11 @@ class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps
                 this.dialogShow('mini');
                 form.reset();
             }
+        });
+        //Close the optional parameters Accordion and reset the Task list
+        this.setState({
+            activeIndex: -1,
+            TaskList: new Array()
         });
     }
 
