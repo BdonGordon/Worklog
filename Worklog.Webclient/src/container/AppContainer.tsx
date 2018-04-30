@@ -12,6 +12,13 @@ class AppContainer extends React.Component<IAppContainer, {}> {
         const { store } = this.props;
 
         return (
+            //DOC: Provides the entire application with the Redux store that we created inside the /store/ directory. Not implemented until STEP 5
+            /** DOC: 
+            * Disregard everything except: <CoreLayout/> ...
+            * return (
+            *   <CoreLayout />
+            * );
+            **/
             <Provider store={store}>
                 <div style={{ height: '100%' }}>
                     <CoreLayout />

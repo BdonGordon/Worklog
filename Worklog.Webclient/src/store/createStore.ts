@@ -16,6 +16,7 @@ export function configureStore(initialState?: any): Store<any> {
 
     let newState = initialState || {};
 
+    //DOC: not created without until STEP 5
     const store = createStore(makeRootReducer, newState, composeEnhancers(
         applyMiddleware(...middlewares)
     ));

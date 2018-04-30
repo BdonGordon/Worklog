@@ -5,8 +5,9 @@ import { IConfig, ISetting } from '../config/config';
 /*START: API STUFF PART 1 HERE*/
 const config: IConfig = require('../config/config.json');
 const settings: ISetting = config.settings[config.env];
-
 /*END: API DECLARATIONS*/
+
+//DOC: The next 6 lines of code are just redux actions that we are defining as constant strings. This is our format
 export const ADD_WORKLOG_REQUEST = "worklog/ADD_WORKLOG_REQUEST";
 export const ADD_WORKLOG_RESPONSE = "worklog/ADD_WORKLOG_RESPONSE";
 export const ADD_WORKLOG_ERROR = 'worklog/ADD_WORKLOG_ERROR';
@@ -16,6 +17,18 @@ export const GET_WORKLOG_RESPONSE = "worklog/GET_WORKLOG_RESPONSE";
 export const GET_WORKLOG_ERROR = 'worklog/GET_ADDWORKLOG_ERROR';
 
 type WorklogActions = WorklogAction & WorklogsAction;
+
+
+/* DOC: OLD addWorklog without the API. READ THIS FIRST
+export function addWorklog(worklog: IWorklog): WorklogAction {
+    return {
+        type: ADD_WORKLOG_RESPONSE,
+        payload: {
+            addedWorklog: worklog
+        }
+    };
+}
+*/
 
 /**
  * Adding worklogs

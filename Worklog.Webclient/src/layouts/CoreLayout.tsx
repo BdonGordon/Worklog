@@ -14,21 +14,9 @@ export interface IState {
 class CoreLayout extends React.Component<ICoreLayoutProps, IState> {
     constructor(props) {
         super(props);
-
-        this.state = {
-            isVisible: true
-        };
-        this.toggleVisibility = this.toggleVisibility.bind(this);
-    }
-
-    toggleVisibility() {
-        this.setState({
-            isVisible: !this.state.isVisible
-        });
     }
 
     render() {
-        const { isVisible } = this.state;
 
         return (
             <BrowserRouter>
@@ -36,6 +24,8 @@ class CoreLayout extends React.Component<ICoreLayoutProps, IState> {
                     <div className="layoutMain">
                         <div className="layoutHeader">
                             <div style={{ textAlign: 'center' }}>
+                                {/*DOC: This is optional, but basically any type of menu bar or navigation drawer belongs in src/components/ directory. More vaguely,
+                                anything in the application that could be seen as a "standalone" component*/}
                                 <MenuBar/>
                             </div>
                         </div>

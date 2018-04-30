@@ -11,6 +11,8 @@ const store: Store<any> = configureStore(initialState);
 class App extends React.Component<{}, {}> {
     render() {
         return (
+            //DOC: This is where we pass the store into AppContainer as a prop to utilize; we do not implement this until STEP 5
+            //DOC: The portion below would only look like: <AppContainer/>
             <AppContainer store={store}/>
         );
     }
