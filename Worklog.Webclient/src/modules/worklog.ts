@@ -16,11 +16,14 @@ export const GET_WORKLOG_REQUEST = "worklog/GET_WORKLOG_REQUEST";
 export const GET_WORKLOG_RESPONSE = "worklog/GET_WORKLOG_RESPONSE";
 export const GET_WORKLOG_ERROR = 'worklog/GET_ADDWORKLOG_ERROR';
 
+//DOC: This is where we define a type that is of BOTH the actions that we defined in our Worklog model file
 type WorklogActions = WorklogAction & WorklogsAction;
 
 
-/* DOC: OLD addWorklog without the API. READ THIS FIRST
-export function addWorklog(worklog: IWorklog): WorklogAction {
+/* DOC: OLD addWorklog without the API. READ THIS FIRST. The function just returns the payload which holds the value of the worklog object that is
+* defined in the AddWorklog component (we'll see it later on)
+*/
+/*export function addWorklog(worklog: IWorklog): WorklogAction {
     return {
         type: ADD_WORKLOG_RESPONSE,
         payload: {
@@ -30,7 +33,7 @@ export function addWorklog(worklog: IWorklog): WorklogAction {
 }
 */
 
-/**
+/** DOC: Will be discussed in API Section Step. If on Webclient still, ignore this. 
  * Adding worklogs
  * @param worklog
  */
@@ -66,14 +69,16 @@ export function getWorklogs(): ICallApiAction {
     };
 }
 
-/**
+/** DOC: This is the pure reducer function that switches between the application actions that occur.
+ * Notice that the state parameter is intialized to the "initialState" and action is that of WorklogActions type
  * Reducer function 
  * @param state
  * @param action
  */
 export function worklogReducer(state: IWorklogState = initialState, action: WorklogActions) {
     switch (action.type) {
-        //START: Adding a worklog
+        //START: Adding a worklog. 
+        //DOC: This is typically what our systems' reducer functions look like. Starts with a REQUEST and ends with either a RESPONSE or ERROR
         case ADD_WORKLOG_REQUEST: {
             return Object.assign({}, state, {
                 isFetching: true,
@@ -84,7 +89,7 @@ export function worklogReducer(state: IWorklogState = initialState, action: Work
 
         case ADD_WORKLOG_RESPONSE: {
             let list = state.worklogList.slice();
-            list.unshift(action.payload.worklog);
+            list.unshift(action.payload.worklog); //DOC: Just adding to the list of worklog objects (received from the payload) 
 
             return Object.assign({}, state, {
                 isFetching: false,

@@ -4,7 +4,12 @@ import { connect } from 'react-redux';
 import { addWorklog } from '../../../modules/worklog';
 import { IWorklog, WorklogsAction, WorklogAction, ITask } from '../../../models/Worklog';
 
+/**
+ * DOC: First and foremost, EVERY container you see in an application will have an export namespace with this type of
+ * naming convention
+ */
 export namespace AddWorklogProps {
+    /** DOC: These are the state values from the REDUX store. Every property here has its value from the store**/
     export interface IStateProps {
         //worklog: IWorklog | null;
         isFetching: boolean;
@@ -13,15 +18,20 @@ export namespace AddWorklogProps {
         worklogList: Array<IWorklog>;
     }
 
+    //DOC: This is where we call our functions from the reducer (imported as per above) 
     export interface IDispatchProps {
         addWorklog: (worklog: IWorklog) => Promise<WorklogAction>;
     }
 
+    //DOC: To be honest, still unsure as to what this does
     export interface IOwnProps {
     }
 
+    //DOC: Just do this !
     export interface IProps extends IStateProps, IDispatchProps, IOwnProps { }
 
+    /**This is the COMPONENT's state. The component's state's property can be thought of as relative to it alone. The difference between this IState
+    and IStateProps is that IStateProps is "universal" because it is in the store. **/
     export interface IState {
         //START:Dialog state properties
         errorDialogOpen?: boolean;
