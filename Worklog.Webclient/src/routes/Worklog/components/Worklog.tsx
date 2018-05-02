@@ -31,6 +31,8 @@ class Worklog extends React.Component<WorklogProps.IProps, WorklogProps.IState> 
         this.toggleTaskDate = this.toggleTaskDate.bind(this);
         this.matchDate = this.matchDate.bind(this);
 
+        this.handleDeleteWorklog = this.handleDeleteWorklog.bind(this);
+
     }
 
     componentWillMount() {
@@ -55,7 +57,8 @@ class Worklog extends React.Component<WorklogProps.IProps, WorklogProps.IState> 
             modalAuthor: worklog.Author,
             modalDescription: worklog.Description,
             modalTimestamp: worklog.StartTime,
-            modalDate: dateString
+            modalDate: dateString,
+            selectedWorklog: worklog //deleting purposes
         });
     }
 
@@ -159,9 +162,16 @@ class Worklog extends React.Component<WorklogProps.IProps, WorklogProps.IState> 
             return null;
         })
         );
-        
     }
-    
+
+    handleDeleteWorklog() {
+        let deletedWorklog: IWorklog = this.state.selectedWorklog;
+        this.props.deleteWorklog(deletedWorklog);
+        this.setState({
+            isSelected: false
+        });
+    }
+
     /**
      * Firstly, this method is called for the RIGHT side of the component to render the dates from TODAY up until the next 7 days
      * Each of these dates are rendered as Accordians which will have the contain of the tasks that pertain to that particular date
@@ -221,7 +231,7 @@ class Worklog extends React.Component<WorklogProps.IProps, WorklogProps.IState> 
                         </div>
                     </Modal.Description>
                     <Modal.Actions>
-                        <Button negative={true}><Icon name='remove' />Delete</Button>
+                        <Button negative={true} onClick={this.handleDeleteWorklog} > <Icon name='remove' />Delete</Button>
                         <Button color='grey'><Icon name='write' />Edit</Button>
                     </Modal.Actions>
                 </Modal>

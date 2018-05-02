@@ -16,6 +16,11 @@ export const GET_WORKLOG_REQUEST = "worklog/GET_WORKLOG_REQUEST";
 export const GET_WORKLOG_RESPONSE = "worklog/GET_WORKLOG_RESPONSE";
 export const GET_WORKLOG_ERROR = 'worklog/GET_ADDWORKLOG_ERROR';
 
+export const DELETE_WORKLOG_REQUEST = "worklog/DELETE_WORKLOG_REQUEST";
+export const DELETE_WORKLOG_RESPONSE = "worklog/DELETE_WORKLOG_RESPONSE";
+export const DELETE_WORKLOG_ERROR = 'worklog/DELETE_ADDWORKLOG_ERROR';
+
+
 //DOC: This is where we define a type that is of BOTH the actions that we defined in our Worklog model file
 type WorklogActions = WorklogAction & WorklogsAction;
 
@@ -65,6 +70,15 @@ export function getWorklogs(): ICallApiAction {
             headers: {
                 'Content-Type': 'application/json'
             }
+        }
+    };
+}
+
+export function deleteWorklog(worklog: IWorklog): WorklogAction {
+    return {
+        type: DELETE_WORKLOG_RESPONSE,
+        payload: {
+            worklog: worklog
         }
     };
 }
@@ -134,8 +148,37 @@ export function worklogReducer(state: IWorklogState = initialState, action: Work
                 message: !!action.payload.response ? action.payload.response.message : 'Unknown error'
             });
         }
-
         //END: Worklog list
+
+        //START: Delete Worklog
+        case DELETE_WORKLOG_REQUEST: {
+            return Object.assign({}, state, {
+                isFetching: true,
+                hasError: false,
+                message: null
+            });
+        }
+
+        case DELETE_WORKLOG_RESPONSE: {
+            let deletedWorklog: IWorklog = action.payload.worklog;
+            let currentWorklogList: Array<IWorklog> = state.worklogList;
+            let updatedWorklogList: Array<IWorklog> = currentWorklogList.filter((oldWorklog: IWorklog) => oldWorklog.WorklogID !== deletedWorklog.WorklogID);
+
+            return Object.assign({}, state, {
+                isFetching: false,
+                hasError: false,
+                message: null,
+                worklogList: updatedWorklogList
+            });
+        }
+
+        case DELETE_WORKLOG_ERROR: {
+            return Object.assign({}, state, {
+                isFetching: false,
+                hasError: true,
+                message: !!action.payload.response ? action.payload.response.message : 'Unknown error'
+            });
+        }
 
         default:
             return state;

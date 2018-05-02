@@ -2,7 +2,7 @@
 import Worklog from '../components/Worklog';
 import { connect } from 'react-redux';
 import { IWorklog, WorklogsAction, WorklogAction, ITask } from '../../../models/Worklog';
-import { getWorklogs } from '../../../modules/worklog';
+import { getWorklogs, deleteWorklog } from '../../../modules/worklog';
 
 export namespace WorklogProps {
     export interface IStateProps {
@@ -14,6 +14,7 @@ export namespace WorklogProps {
 
     export interface IDispatchProps {
         getWorklogs: () => Promise<WorklogsAction>;
+        deleteWorklog: (worklog: IWorklog) => Promise<WorklogsAction>;
     }
 
     export interface IOwnProps {
@@ -36,6 +37,9 @@ export namespace WorklogProps {
         activeIndex?: number;
         /**END: Worklog OPTIONAL Due date and task properties**/
         week?: Array<string>;
+
+        //For deletion
+        selectedWorklog?: IWorklog;
     }
 }
 
@@ -50,7 +54,8 @@ function mapStateToProps(state: any) {
 
 function mapDispatchToProps(dispatch: any) {
     return {
-        getWorklogs: (): Promise<WorklogsAction> => dispatch(getWorklogs())
+        getWorklogs: (): Promise<WorklogsAction> => dispatch(getWorklogs()),
+        deleteWorklog: (worklog: IWorklog): Promise<WorklogsAction> => dispatch(deleteWorklog(worklog))
     };
 }
 
