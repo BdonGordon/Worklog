@@ -11,7 +11,7 @@ import { IWorklog, WorklogsAction, WorklogAction, ITask } from '../../../models/
 export namespace AddWorklogProps {
     /** DOC: These are the state values from the REDUX store. Every property here has its value from the store**/
     export interface IStateProps {
-        //worklog: IWorklog | null;
+        worklog: IWorklog | null;
         isFetching: boolean;
         hasError: boolean;
         message: string | null;
@@ -30,7 +30,7 @@ export namespace AddWorklogProps {
     //DOC: Just do this !
     export interface IProps extends IStateProps, IDispatchProps, IOwnProps { }
 
-    /**This is the COMPONENT's state. The component's state's property can be thought of as relative to it alone. The difference between this IState
+    /**DOC: This is the COMPONENT's state. The component's state's property can be thought of as relative to it alone. The difference between this IState
     and IStateProps is that IStateProps is "universal" because it is in the store. **/
     export interface IState {
         //START:Dialog state properties
@@ -54,24 +54,29 @@ export namespace AddWorklogProps {
 }
 
 /**
- * Shouldn't be 'any' though
+ * DOC: As the name suggests, this function maps the application's state to the props of the component that we defined
+ * above in the namespace in the IStateProps interface
  * @param state
  */
 function mapStateToProps(state: any) {
     return {
-        //worklog: state.worklog.worklog,
+        worklog: state.worklog.worklog,
         isFetching: state.worklog.isFetching,
         hasError: state.worklog.hasError,
         message: state.worklog.message,
         worklogList: state.worklog.worklogList
     };
 }
-
+/**
+ * DOC: Essentially the same thing as above, but it's mapping to the worklog's function that we defined in the worklog module
+ * @param dispatch
+ */
 function mapDispatchToProps(dispatch: any) {
     return {
         addWorklog: (worklog: IWorklog): Promise<WorklogAction> => dispatch(addWorklog(worklog))
     };
 }
 
+//DOC: Do this :)
 export default connect<AddWorklogProps.IStateProps, AddWorklogProps.IDispatchProps, AddWorklogProps.IOwnProps>(mapStateToProps, mapDispatchToProps)(AddWorklog);
 //export default AddWorklog;

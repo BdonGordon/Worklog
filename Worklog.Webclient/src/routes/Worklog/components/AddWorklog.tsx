@@ -182,9 +182,15 @@ class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps
         });
     }
 
+    /**
+     * DOC: This function is where we send the Worklog object to the database using the addWorklog() functin that we defined in the model.
+     * Follow along with the supporting comments below. 
+     * @param e
+     */
     handleFormSubmit(e: React.FormEvent<HTMLFormElement>) {
         let form: HTMLFormElement = e.currentTarget;
 
+        //DOC: Creating the task object with the inputted info
         let taskObject = {
             duedate: this.state.DueDate,
             tasks: this.state.TaskList.map((task) => {
@@ -193,6 +199,7 @@ class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps
         };
         let taskJson = JSON.stringify(taskObject);
 
+        //DOC: Create the Worklog object
         let worklog: IWorklog = {
             Subject: this.state.Subject,
             Author: this.state.Author,
@@ -202,6 +209,9 @@ class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps
             Description: this.state.Description,
             Tasks: taskJson
         };
+
+        //DOC: With the .then, that's where we are using the WorklogActions' properties (response, message, error) to notify 
+        //the status of the communication between the app and the database
         this.props.addWorklog(worklog).then((result) => {
             if (result.error) {
                 console.log("Error while adding log : " +
