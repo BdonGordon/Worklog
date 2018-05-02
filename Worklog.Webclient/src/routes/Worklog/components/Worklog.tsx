@@ -1,9 +1,9 @@
 ﻿import * as React from 'react';
 import { withRouter } from 'react-router-dom';
+import { Toaster, Position, Intent } from '@blueprintjs/core';
 import { Button, Header, Image, Modal, List, Icon, Grid, Divider, Accordion } from 'semantic-ui-react';
 import { WorklogProps } from '../containers/WorklogContainer';
 import { IWorklog, ITask } from '../../../models/Worklog';
-import _ from 'lodash';
 
 const initialState: WorklogProps.IState = {
     isSelected: false,
@@ -15,7 +15,12 @@ const initialState: WorklogProps.IState = {
     selectedDate: '',
     week: new Array(),
     activeIndex: -1,
+    isDeleted: false
 };
+
+const toaster = Toaster.create({
+    position: Position.BOTTOM
+});
 
 class Worklog extends React.Component<WorklogProps.IProps, WorklogProps.IState> {
     constructor(props: WorklogProps.IProps) {
@@ -67,7 +72,8 @@ class Worklog extends React.Component<WorklogProps.IProps, WorklogProps.IState> 
      */
     modalClose() {
         this.setState({
-            isSelected: false
+            isSelected: false,
+            isDeleted: false
         });
     }
 
@@ -166,10 +172,21 @@ class Worklog extends React.Component<WorklogProps.IProps, WorklogProps.IState> 
 
     handleDeleteWorklog() {
         let deletedWorklog: IWorklog = this.state.selectedWorklog;
-        this.props.deleteWorklog(deletedWorklog);
-        this.setState({
-            isSelected: false
+        this.props.deleteWorklog(deletedWorklog).then((result) => {
+            if (result.error) {
+                console.log("Error while adding log : " +
+                    !!result.payload && !!result.payload.response ? result.payload.response.message : 'Unknown error');
+            }
+            else {
+
+            }
         });
+
+        this.setState({
+            isSelected: false,
+            isDeleted: true
+        });
+        
     }
 
     /**
@@ -235,6 +252,17 @@ class Worklog extends React.Component<WorklogProps.IProps, WorklogProps.IState> 
                         <Button color='grey'><Icon name='write' />Edit</Button>
                     </Modal.Actions>
                 </Modal>
+
+                {/*Modal to let user know they successfully deleted a worklog... I prefer toast but w/e*/}
+                <Modal size='tiny' className='dialog-position' open={this.state.isDeleted} closeIcon={true} onClose={this.modalClose} closeOnEscape={true}>
+                    <Modal.Header>Delete Successful</Modal.Header>
+                    <Modal.Description>
+                        <div className="cardview-modal">
+                            <pre><Icon name='checkmark'/> Successfully deleted worklog {this.state.modalTitle}</pre>
+                        </div>
+                    </Modal.Description>
+                </Modal>
+
             </div>
         );
     }

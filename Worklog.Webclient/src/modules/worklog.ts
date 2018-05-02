@@ -1,4 +1,4 @@
-import { IWorklog, IWorklogState, initialState, WorklogAction, WorklogsAction } from '../models/Worklog';
+import { IWorklog, IWorklogState, initialState, WorklogAction, WorklogsAction, IWorklogsDeleteAction } from '../models/Worklog';
 import { CALL_API } from 'redux-api-middleware';
 import { IConfig, ISetting } from '../config/config';
 
@@ -22,7 +22,7 @@ export const DELETE_WORKLOG_ERROR = 'worklog/DELETE_ADDWORKLOG_ERROR';
 
 
 //DOC: This is where we define a type that is of BOTH the actions that we defined in our Worklog model file
-type WorklogActions = WorklogAction & WorklogsAction;
+type WorklogActions = WorklogAction & WorklogsAction & IWorklogsDeleteAction;
 
 
 /* DOC: OLD addWorklog without the API. READ THIS FIRST. The function just returns the payload which holds the value of the worklog object that is
@@ -74,14 +74,31 @@ export function getWorklogs(): ICallApiAction {
     };
 }
 
-export function deleteWorklog(worklog: IWorklog): WorklogAction {
+//API STEP 1: change the return type and method body
+export function deleteWorklog(worklog: IWorklog): ICallApiAction {
     return {
-        type: DELETE_WORKLOG_RESPONSE,
-        payload: {
-            worklog: worklog
+        [CALL_API]: {
+            endpoint: `${settings.baseURL}:${settings.port}${settings.baseRoutePath}/worklog/deleteWorklog`,
+            method: 'DELETE',
+            types: [DELETE_WORKLOG_REQUEST, DELETE_WORKLOG_RESPONSE, DELETE_WORKLOG_ERROR],
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                'worklog': worklog
+            })
         }
     };
 }
+
+//export function deleteWorklog(worklog: IWorklog): WorklogAction {
+//    return {
+//        type: DELETE_WORKLOG_RESPONSE,
+//        payload: {
+//            worklog: worklog
+//        }
+//    };
+//}
 
 /** DOC: This is the pure reducer function that switches between the application actions that occur.
  * Notice that the state parameter is intialized to the "initialState" and action is that of WorklogActions type
@@ -160,15 +177,16 @@ export function worklogReducer(state: IWorklogState = initialState, action: Work
         }
 
         case DELETE_WORKLOG_RESPONSE: {
-            let deletedWorklog: IWorklog = action.payload.worklog;
-            let currentWorklogList: Array<IWorklog> = state.worklogList;
-            let updatedWorklogList: Array<IWorklog> = currentWorklogList.filter((oldWorklog: IWorklog) => oldWorklog.WorklogID !== deletedWorklog.WorklogID);
+            //let deletedWorklog: IWorklog = action.payload.worklog;
+            //let currentWorklogList: Array<IWorklog> = state.worklogList;
+            //let updatedWorklogList: Array<IWorklog> = currentWorklogList.filter((oldWorklog: IWorklog) => oldWorklog.WorklogID !== deletedWorklog.WorklogID);
+            const newLogs = state.worklogList.filter(worklog => worklog.WorklogID !== action.payload.WorklogID);
 
             return Object.assign({}, state, {
                 isFetching: false,
                 hasError: false,
                 message: null,
-                worklogList: updatedWorklogList
+                worklogList: newLogs
             });
         }
 

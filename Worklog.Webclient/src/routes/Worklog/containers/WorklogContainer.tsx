@@ -40,6 +40,7 @@ export namespace WorklogProps {
 
         //For deletion
         selectedWorklog?: IWorklog;
+        isDeleted?: boolean;
     }
 }
 

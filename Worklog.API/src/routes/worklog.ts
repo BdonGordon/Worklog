@@ -12,6 +12,7 @@ export class Worklog {
     private init(): void {
         this.router.get('/getWorklogs', WorklogController.getWorklogs);
         this.router.post('/addWorklog', WorklogController.addWorklog);
+        this.router.delete('/deleteWorklog', WorklogController.deleteWorklog);
     }
 }
 

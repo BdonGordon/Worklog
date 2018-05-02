@@ -8,6 +8,9 @@ export function getWorklogs(): Promise<Array<IWorklogAttributes>> {
     return worklogDB.Worklog.findAll();
 }
 
+
+
+
 /**
  * "Creates the given worklog, then returns the newly created worklog"
  * @param worklog
@@ -30,5 +33,18 @@ export function addWorklog(worklog: IWorklogAttributes): Promise<IWorklogAttribu
                 WorklogID: log.WorklogID
             }
         });
+        });
+}
+
+//API STEP 2: 
+export function deleteWorklog(worklog: IWorklogAttributes): Promise<number> {
+    const WorklogID: number = worklog.WorklogID;
+
+    return worklogDB.Worklog.destroy({
+        where: {
+            WorklogID: WorklogID
+        }
+    }).then((rowsAffected: number) => {
+        return WorklogID;
     });
 }

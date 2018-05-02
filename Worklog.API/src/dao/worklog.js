@@ -25,4 +25,15 @@ function addWorklog(worklog) {
     });
 }
 exports.addWorklog = addWorklog;
+function deleteWorklog(worklog) {
+    const WorklogID = worklog.WorklogID;
+    return index_1.worklogDB.Worklog.destroy({
+        where: {
+            WorklogID: WorklogID
+        }
+    }).then((rowsAffected) => {
+        return WorklogID;
+    });
+}
+exports.deleteWorklog = deleteWorklog;
 //# sourceMappingURL=worklog.js.map

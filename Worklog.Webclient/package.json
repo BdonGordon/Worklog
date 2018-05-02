@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@blueprintjs/core": "^2.3.1",
+    "@blueprintjs/docs-theme": "^2.1.2",
+    "@blueprintjs/labs": "^0.15.5",
     "moment": "^2.22.0",
     "node-sass": "^4.8.3",
     "react": "^16.2.0",
@@ -10,6 +13,7 @@
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
     "react-scripts-ts": "2.14.0",
+    "react-transition-group": "^2.3.1",
     "redux": "^3.7.2",
     "redux-api-middleware": "^2.3.0",
     "redux-throttle-actions": "^1.1.0",

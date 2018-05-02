@@ -67,3 +67,17 @@ export interface WorklogsAction extends AnyAction {
         }
     };
 }
+
+/**
+* THis is its own separate action from the others above
+**/
+export interface IWorklogsDeleteAction extends AnyAction {
+    error?: boolean;
+    payload: {
+        WorklogID: number;
+        response: {
+            message?: string;
+            error?: {};
+        }
+    };
+}

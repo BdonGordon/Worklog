@@ -10,6 +10,7 @@ class Worklog {
     init() {
         this.router.get('/getWorklogs', worklogController_1.default.getWorklogs);
         this.router.post('/addWorklog', worklogController_1.default.addWorklog);
+        this.router.delete('/deleteWorklog', worklogController_1.default.deleteWorklog);
     }
 }
 exports.Worklog = Worklog;

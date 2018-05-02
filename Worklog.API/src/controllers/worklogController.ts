@@ -41,6 +41,15 @@ export class WorklogController {
             
             //.catch((error: Error) => next(error));
     }
+
+    //API STEP 3:
+    deleteWorklog(req: Request, res: Response, next: NextFunction): Promise<void | Response> {
+        return WorklogDoa
+            .deleteWorklog(req.body.worklog)
+            .then((worklogID: number) => res.status(200).send({
+                WorklogID: worklogID
+            })).catch((error: Error) => next(error));
+    }
 }
 
 const instance: WorklogController = new WorklogController();

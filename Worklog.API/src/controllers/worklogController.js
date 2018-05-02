@@ -19,6 +19,13 @@ class WorklogController {
             addedWorklog = log;
         }).catch((error) => next(error));
     }
+    deleteWorklog(req, res, next) {
+        return index_1.WorklogDoa
+            .deleteWorklog(req.body.worklog)
+            .then((worklogID) => res.status(200).send({
+            WorklogID: worklogID
+        })).catch((error) => next(error));
+    }
 }
 exports.WorklogController = WorklogController;
 const instance = new WorklogController();
