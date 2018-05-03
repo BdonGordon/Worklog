@@ -293,13 +293,13 @@ class Worklog extends React.Component<WorklogProps.IProps, WorklogProps.IState> 
                 </div>
 
                 {/*Modal to show the worklog that has been pressed*/}
-                <Modal size='small' className='dialog-position' open={this.state.isSelected} closeIcon={true} onClose={this.modalClose}>
+                <Modal size='small' className='dialog-position' open={this.state.isSelected} closeIcon={true} onClose={this.modalClose} closeOnRootNodeClick={false}>
                     <Modal.Header>{this.state.modalTitle} <small><i>by</i></small> <small>{this.state.modalAuthor} - {this.state.modalDate}</small></Modal.Header>
                     <Modal.Description>
                         <div className="cardview-modal">
                             <Header><small>Posted at {this.state.modalTimestamp}</small></Header>
                             <pre hidden={this.state.isEditing}>{this.state.modalDescription}</pre>
-                            <textarea style={{ resize: 'none', width: '95%', visibility: !this.state.isEditing ? 'hidden' : 'visible' }} defaultValue={this.state.modalDescription} onChange={this.handleDescriptionChange}/>
+                            <textarea style={{ resize: 'none', width: '95%', visibility: !this.state.isEditing ? 'hidden' : 'visible', height: '60px' }} defaultValue={this.state.modalDescription} onChange={this.handleDescriptionChange}/>
                         </div>
                     </Modal.Description>
                     <Modal.Actions>
