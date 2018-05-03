@@ -1,7 +1,7 @@
 ﻿import * as React from 'react';
 import { withRouter } from 'react-router-dom';
 import { Toaster, Position, Intent } from '@blueprintjs/core';
-import { Button, Header, Image, Modal, List, Icon, Grid, Divider, Accordion } from 'semantic-ui-react';
+import { Button, Header, Image, Modal, List, Icon, Grid, Divider, Accordion, TextArea } from 'semantic-ui-react';
 import { WorklogProps } from '../containers/WorklogContainer';
 import { IWorklog, ITask } from '../../../models/Worklog';
 
@@ -15,7 +15,10 @@ const initialState: WorklogProps.IState = {
     selectedDate: '',
     week: new Array(),
     activeIndex: -1,
-    isDeleted: false
+    isDeleted: false,
+    isEditing: false,
+    isEditSaved: false,
+    editedDescription: ''
 };
 
 const toaster = Toaster.create({
@@ -36,8 +39,9 @@ class Worklog extends React.Component<WorklogProps.IProps, WorklogProps.IState> 
         this.toggleTaskDate = this.toggleTaskDate.bind(this);
         this.matchDate = this.matchDate.bind(this);
 
-        this.handleDeleteWorklog = this.handleDeleteWorklog.bind(this);
-
+        this.handleDeleteCancelWorklog = this.handleDeleteCancelWorklog.bind(this);
+        this.handleEditSaveWorklog = this.handleEditSaveWorklog.bind(this);
+        this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
     }
 
     componentWillMount() {
@@ -73,7 +77,9 @@ class Worklog extends React.Component<WorklogProps.IProps, WorklogProps.IState> 
     modalClose() {
         this.setState({
             isSelected: false,
-            isDeleted: false
+            isDeleted: false,
+            isEditing: false,
+            isEditSaved: false
         });
     }
 
@@ -170,23 +176,58 @@ class Worklog extends React.Component<WorklogProps.IProps, WorklogProps.IState> 
         );
     }
 
-    handleDeleteWorklog() {
+    handleDeleteCancelWorklog() {
         let deletedWorklog: IWorklog = this.state.selectedWorklog;
-        this.props.deleteWorklog(deletedWorklog).then((result) => {
-            if (result.error) {
-                console.log("Error while adding log : " +
-                    !!result.payload && !!result.payload.response ? result.payload.response.message : 'Unknown error');
-            }
-            else {
 
-            }
-        });
+        if (!this.state.isEditing) {
+            this.props.deleteWorklog(deletedWorklog).then((result) => {
+                if (result.error) {
+                    console.log("Error while adding log : " +
+                        !!result.payload && !!result.payload.response ? result.payload.response.message : 'Unknown error');
+                }
+                else {
 
+                }
+            });
+
+            this.setState({
+                isSelected: false,
+                isDeleted: true,
+                isEditing: false,
+                isEditSaved: false
+            });
+        }
+        //For Canceling the EDIT
+        else {
+            this.setState({
+                isEditing: false,
+                isEditSaved: false
+            });
+        }
+    }
+
+    handleEditSaveWorklog() {
+        //Initial state when a log is clicked; gives the option to EDIT
+        if (!this.state.isEditing) {
+            this.setState({
+                isEditing: true
+            });
+        }
+        //To SAVE the changes to the description
+        else {
+            let newDescription: string = this.state.editedDescription;
+            this.setState({
+                isEditing: false,
+                isEditSaved: true,
+                modalDescription: newDescription
+            });
+        }
+    }
+
+    handleDescriptionChange(e: React.FormEvent<HTMLTextAreaElement>) {
         this.setState({
-            isSelected: false,
-            isDeleted: true
+            editedDescription: e.currentTarget.value
         });
-        
     }
 
     /**
@@ -209,6 +250,20 @@ class Worklog extends React.Component<WorklogProps.IProps, WorklogProps.IState> 
                 </Accordion>
             );
         }));
+    }
+
+    deleteCancelTitleChange() {
+        if (!this.state.isEditing) {
+            return 'Delete';
+        }
+        return 'Cancel Changes';
+    }
+
+    editSaveTitleChange() {
+        if (!this.state.isEditing) {
+            return 'Edit';
+        }
+        return 'Save Changes';
     }
 
     /**END: This is for the TASKS section (right side of the component)**/
@@ -238,18 +293,19 @@ class Worklog extends React.Component<WorklogProps.IProps, WorklogProps.IState> 
                 </div>
 
                 {/*Modal to show the worklog that has been pressed*/}
-                <Modal size='small' className='dialog-position' open={this.state.isSelected} closeIcon={true} onClose={this.modalClose} closeOnEscape={true}>
+                <Modal size='small' className='dialog-position' open={this.state.isSelected} closeIcon={true} onClose={this.modalClose}>
                     <Modal.Header>{this.state.modalTitle} <small><i>by</i></small> <small>{this.state.modalAuthor} - {this.state.modalDate}</small></Modal.Header>
                     <Modal.Description>
                         <div className="cardview-modal">
                             <Header><small>Posted at {this.state.modalTimestamp}</small></Header>
-
-                            <pre>{this.state.modalDescription}</pre>
+                            <pre hidden={this.state.isEditing}>{this.state.modalDescription}</pre>
+                            <textarea style={{ resize: 'none', width: '95%', visibility: !this.state.isEditing ? 'hidden' : 'visible' }} defaultValue={this.state.modalDescription} onChange={this.handleDescriptionChange}/>
                         </div>
                     </Modal.Description>
                     <Modal.Actions>
-                        <Button negative={true} onClick={this.handleDeleteWorklog} > <Icon name='remove' />Delete</Button>
-                        <Button color='grey'><Icon name='write' />Edit</Button>
+                        {/*When the user initially selects a log... Delete and Edit are the first options*/}
+                        <Button negative={true} onClick={this.handleDeleteCancelWorklog} > <Icon name='remove' />{this.deleteCancelTitleChange()}</Button>
+                        <Button color={!this.state.isEditing ? 'grey' : 'green'} onClick={this.handleEditSaveWorklog}> <Icon name='write' />{this.editSaveTitleChange()}</Button>
                     </Modal.Actions>
                 </Modal>
 

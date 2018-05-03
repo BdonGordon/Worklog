@@ -41,6 +41,11 @@ export namespace WorklogProps {
         //For deletion
         selectedWorklog?: IWorklog;
         isDeleted?: boolean;
+
+        //For edit
+        isEditing?: boolean;
+        isEditSaved?: boolean;
+        editedDescription?: string;
     }
 }
 
