@@ -201,7 +201,7 @@ class Worklog extends React.Component<WorklogProps.IProps, WorklogProps.IState> 
         else {
             this.setState({
                 isEditing: false,
-                isEditSaved: false
+                isEditSaved: false,
             });
         }
     }
@@ -210,7 +210,8 @@ class Worklog extends React.Component<WorklogProps.IProps, WorklogProps.IState> 
         //Initial state when a log is clicked; gives the option to EDIT
         if (!this.state.isEditing) {
             this.setState({
-                isEditing: true
+                isEditing: true,
+                editedDescription: ''
             });
         }
         //To SAVE the changes to the description
