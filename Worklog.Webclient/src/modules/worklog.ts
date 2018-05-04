@@ -20,6 +20,9 @@ export const DELETE_WORKLOG_REQUEST = "worklog/DELETE_WORKLOG_REQUEST";
 export const DELETE_WORKLOG_RESPONSE = "worklog/DELETE_WORKLOG_RESPONSE";
 export const DELETE_WORKLOG_ERROR = 'worklog/DELETE_ADDWORKLOG_ERROR';
 
+export const EDIT_WORKLOG_REQUEST = "worklog/EDIT_WORKLOG_REQUEST";
+export const EDIT_WORKLOG_RESPONSE = "worklog/EDIT_WORKLOG_RESPONSE";
+export const EDIT_WORKLOG_ERROR = 'worklog/EDIT_ADDWORKLOG_ERROR';
 
 //DOC: This is where we define a type that is of BOTH the actions that we defined in our Worklog model file
 type WorklogActions = WorklogAction & WorklogsAction & IWorklogsDeleteAction;
@@ -81,6 +84,22 @@ export function deleteWorklog(worklog: IWorklog): ICallApiAction {
             endpoint: `${settings.baseURL}:${settings.port}${settings.baseRoutePath}/worklog/deleteWorklog`,
             method: 'DELETE',
             types: [DELETE_WORKLOG_REQUEST, DELETE_WORKLOG_RESPONSE, DELETE_WORKLOG_ERROR],
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                'worklog': worklog
+            })
+        }
+    };
+}
+
+export function editWorklog(worklog: IWorklog): ICallApiAction {
+    return {
+        [CALL_API]: {
+            endpoint: `${settings.baseURL}:${settings.port}${settings.baseRoutePath}/worklog/editWorklog`,
+            method: 'PUT',
+            types: [EDIT_WORKLOG_REQUEST, EDIT_WORKLOG_RESPONSE, EDIT_WORKLOG_ERROR],
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -177,9 +196,6 @@ export function worklogReducer(state: IWorklogState = initialState, action: Work
         }
 
         case DELETE_WORKLOG_RESPONSE: {
-            //let deletedWorklog: IWorklog = action.payload.worklog;
-            //let currentWorklogList: Array<IWorklog> = state.worklogList;
-            //let updatedWorklogList: Array<IWorklog> = currentWorklogList.filter((oldWorklog: IWorklog) => oldWorklog.WorklogID !== deletedWorklog.WorklogID);
             const newLogs = state.worklogList.filter(worklog => worklog.WorklogID !== action.payload.WorklogID);
 
             return Object.assign({}, state, {
@@ -197,7 +213,37 @@ export function worklogReducer(state: IWorklogState = initialState, action: Work
                 message: !!action.payload.response ? action.payload.response.message : 'Unknown error'
             });
         }
+        //END: Delete Worklog
 
+        //START: Edit Worklog
+        case EDIT_WORKLOG_REQUEST: {
+            return Object.assign({}, state, {
+                isFetching: true,
+                hasError: false,
+                message: null
+            });
+        }
+
+        case EDIT_WORKLOG_RESPONSE: {
+            let updatedWorklog: IWorklog = action.payload.worklog;
+
+
+            return Object.assign({}, state, {
+                isFetching: false,
+                hasError: false,
+                message: null,
+                worklogList: null
+            });
+        }
+
+        case EDIT_WORKLOG_ERROR: {
+            return Object.assign({}, state, {
+                isFetching: false,
+                hasError: true,
+                message: !!action.payload.response ? action.payload.response.message : 'Unknown error'
+            });
+        }
+        //END: Edit Worklog
         default:
             return state;
     }

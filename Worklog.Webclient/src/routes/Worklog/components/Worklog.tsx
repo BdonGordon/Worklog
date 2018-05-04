@@ -210,18 +210,27 @@ class Worklog extends React.Component<WorklogProps.IProps, WorklogProps.IState> 
         //Initial state when a log is clicked; gives the option to EDIT
         if (!this.state.isEditing) {
             this.setState({
-                isEditing: true,
-                editedDescription: ''
+                isEditing: true
             });
         }
         //To SAVE the changes to the description
         else {
             let newDescription: string = this.state.editedDescription;
-            this.setState({
-                isEditing: false,
-                isEditSaved: true,
-                modalDescription: newDescription
-            });
+            //if there is NO change to the textarea
+            if (newDescription === null || newDescription.length < 1) {
+                this.setState({
+                    isEditing: false,
+                    isEditSaved: true,
+                    modalDescription: this.state.modalDescription
+                });
+            }
+            else {
+                this.setState({
+                    isEditing: false,
+                    isEditSaved: true,
+                    modalDescription: newDescription
+                });
+            }
         }
     }
 
