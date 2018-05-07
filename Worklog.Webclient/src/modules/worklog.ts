@@ -27,15 +27,15 @@ export const EDIT_WORKLOG_ERROR = 'worklog/EDIT_ADDWORKLOG_ERROR';
 //DOC: This is where we define a type that is of BOTH the actions that we defined in our Worklog model file
 type WorklogActions = WorklogAction & WorklogsAction & IWorklogsDeleteAction;
 
-
 /* DOC: OLD addWorklog without the API. READ THIS FIRST. The function just returns the payload which holds the value of the worklog object that is
 * defined in the AddWorklog component (we'll see it later on)
 */
-/*export function addWorklog(worklog: IWorklog): WorklogAction {
+/*
+export function addWorklog(worklog: IWorklog): WorklogAction {
     return {
         type: ADD_WORKLOG_RESPONSE,
         payload: {
-            addedWorklog: worklog
+            worklog: worklog
         }
     };
 }
@@ -226,7 +226,6 @@ export function worklogReducer(state: IWorklogState = initialState, action: Work
 
         case EDIT_WORKLOG_RESPONSE: {
             let updatedWorklog: IWorklog = action.payload.worklog;
-
 
             return Object.assign({}, state, {
                 isFetching: false,

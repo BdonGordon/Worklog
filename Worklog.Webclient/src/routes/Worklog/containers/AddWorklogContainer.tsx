@@ -45,7 +45,6 @@ export namespace AddWorklogProps {
         HoursWorked?: number;
         Description?: string;
         Tasks?: string;
-        
         //OPTIONAL input
         DueDate?: Date;
         activeIndex?: number;
@@ -60,7 +59,7 @@ export namespace AddWorklogProps {
  */
 function mapStateToProps(state: any) {
     return {
-        worklog: state.worklog.worklog,
+        worklog: state.worklog.worklog, //DOC: state.worklog where 'worklog' is what we named the reducer in /store/reducers.ts
         isFetching: state.worklog.isFetching,
         hasError: state.worklog.hasError,
         message: state.worklog.message,

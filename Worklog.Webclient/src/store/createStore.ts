@@ -1,7 +1,7 @@
 import { applyMiddleware, compose, createStore, Store } from 'redux';
 import { apiMiddleware } from 'redux-api-middleware';
 import thunk from 'redux-thunk';
-import makeRootReducer from './reducers';
+import makeRootReducer from './reducers'; //DOC: NOT created until STEP 5
 
 export function configureStore(initialState?: any): Store<any> {
     const middlewares: any = [

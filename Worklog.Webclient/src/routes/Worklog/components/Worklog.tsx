@@ -202,15 +202,16 @@ class Worklog extends React.Component<WorklogProps.IProps, WorklogProps.IState> 
             this.setState({
                 isEditing: false,
                 isEditSaved: false,
+                editedDescription: ''
             });
         }
     }
-
+    
     handleEditSaveWorklog() {
         //Initial state when a log is clicked; gives the option to EDIT
         if (!this.state.isEditing) {
             this.setState({
-                isEditing: true
+                isEditing: true,
             });
         }
         //To SAVE the changes to the description
@@ -276,6 +277,10 @@ class Worklog extends React.Component<WorklogProps.IProps, WorklogProps.IState> 
         return 'Save Changes';
     }
 
+    defaultValue() {
+        return this.state.modalDescription;
+    }
+
     /**END: This is for the TASKS section (right side of the component)**/
 
     render() {
@@ -309,7 +314,7 @@ class Worklog extends React.Component<WorklogProps.IProps, WorklogProps.IState> 
                         <div className="cardview-modal">
                             <Header><small>Posted at {this.state.modalTimestamp}</small></Header>
                             <pre hidden={this.state.isEditing}>{this.state.modalDescription}</pre>
-                            <textarea style={{ resize: 'none', width: '95%', visibility: !this.state.isEditing ? 'hidden' : 'visible', height: '60px' }} defaultValue={this.state.modalDescription} onChange={this.handleDescriptionChange}/>
+                            <textarea style={{ resize: 'none', width: '95%', visibility: !this.state.isEditing ? 'hidden' : 'visible', height: '60px' }} defaultValue={this.defaultValue()} onChange={this.handleDescriptionChange} />
                         </div>
                     </Modal.Description>
                     <Modal.Actions>

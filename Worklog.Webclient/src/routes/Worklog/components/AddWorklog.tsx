@@ -5,6 +5,7 @@ import { IWorklog, ITask } from '../../../models/Worklog';
 import { Divider, Form, Label, TextArea, Button, Modal, Accordion, Icon, List, Segment } from 'semantic-ui-react';
 import * as moment from 'moment';
 
+//DOC: We usually want to create the initial state of the component state before proceeding
 const initialState: AddWorklogProps.IState = {
     errorDialogOpen: false,
     submitDialogOpen:  false,
@@ -25,6 +26,8 @@ class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps
     constructor(props: AddWorklogProps.IProps) {
         super(props);
         this.state = initialState;
+
+        //DOC: Don't forget to bind any functions you create 
         this.handleSubjectChange = this.handleSubjectChange.bind(this);
         this.handleAuthorChange = this.handleAuthorChange.bind(this);
         this.handleDateChange = this.handleDateChange.bind(this);
@@ -43,8 +46,6 @@ class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps
         this.renderTaskList = this.renderTaskList.bind(this);
         this.handleTaskTextChange = this.handleTaskTextChange.bind(this);
         this.handleRemoveTask = this.handleRemoveTask.bind(this);
-
-        //this.testShow = this.testShow.bind(this);
     }
 
     handleSubjectChange(e: React.FormEvent<HTMLInputElement>) {
@@ -168,7 +169,6 @@ class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps
                 );
             })
         );
-        //<List key={index}> {index} {input} </List>;
     }
 
     handleTaskTextChange(task: ITask, e: React.FormEvent<HTMLInputElement>) {
@@ -297,6 +297,7 @@ class AddWorklog extends React.Component<AddWorklogProps.IProps, AddWorklogProps
                         <TextArea placeholder="Description of Work Done" onChange={this.handleDescriptionChange} style={{ resize: 'none', width: '20%'}}/>
                     </Form.Field>
 
+                    {/**START: Task inputs**/}
                     <Accordion>
                         <Accordion.Title active={activeIndex === 0} index={0} onClick={this.handleOptionalVisibility} style={{color: 'white'}}>
                             <Icon name='dropdown'/>
